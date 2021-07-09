@@ -19,5 +19,16 @@
   "bugs": {
     "url": "https://github.com/SITE-Capstone/capstone_be/issues"
   },
-  "homepage": "https://github.com/SITE-Capstone/capstone_be#readme"
+  "homepage": "https://github.com/SITE-Capstone/capstone_be#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "colors": "^1.4.0",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.11",
+    "pg": "^8.6.0"
+  }
 }
