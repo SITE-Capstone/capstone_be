@@ -25,3 +25,12 @@ VALUES (
   '$2b$12$LA1KAGAZHzUKGkxraRoClOsZ46xnmT6YxWuyYEJg5k7Iu29.uzrLW',
   ''
 );
+INSERT INTO wallet (user_id)
+VALUES(1);
+
+INSERT INTO wallet (user_id, btc, eth)
+VALUES(2,10000,4);
+
+INSERT INTO wallet (user_id, btc, eth, dot)
+VALUES(3,100000, 1, 5);
+
