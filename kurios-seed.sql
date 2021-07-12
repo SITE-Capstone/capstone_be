@@ -10,7 +10,6 @@ VALUES (
   'jennifer@lopez.io',
   '$2b$12$ME4TAfZ5kXAm18cBGeulDu5YCEHuq93V3ZAW5qGQf90jLglEb.tje',
   ''
-
 ), (
   'lebron',
   'LeBron',
