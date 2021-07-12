@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const { BCRYPT_WORK_FACTOR } = require("../config");
 const { BadRequestError } = require("../utils/errors");
 const db = require("../db");
+const Wallet = require('./wallet')
 
 class User {
   // choose what to return to the user so password is
@@ -77,6 +78,10 @@ class User {
     );
 
     const user = userResult.rows[0];
+
+    let user_id=user.id
+    Wallet.generateWallet(user_id)
+    
 
     return User.makePublicUser(user);
   }

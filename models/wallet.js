@@ -16,18 +16,17 @@ class Wallet {
   }
 
   // Creates a wallet
-  static async generateWallet(credentials) {
+  static async generateWallet(user_id) {
     const requiredFields = ["user_id"];
-    requiredFields.forEach((property) => {
-      if (!credentials.hasOwnProperty(property)) {
-        throw new BadRequestError(`Missing ${property} in request body.`);
-      }
-    });
+
+      if (!user_id) {
+        throw new BadRequestError(`Missing ${user_id} in request body.`);
+    }
 
 
-    const existingWallet = await User.fetchWalletByUserId(credentials.user_id);
+    const existingWallet = await Wallet.fetchWalletByUserId(user_id);
     if (existingWallet) {
-      throw new BadRequestError(`A Wallet already exists with User_ID: ${credentials.user_id}`);
+      throw new BadRequestError(`A Wallet already exists with User_ID: ${user_id}`);
     }
 
     const walletResult = await db.query(
@@ -35,11 +34,11 @@ class Wallet {
         VALUES ($1)
         RETURNING user_id, usd, btc, eth, ada, dot, xmr, doge;
       `,
-      [credentials.user_id]
+      [user_id]
     );
 
     const wallet = walletResult.rows[0];
-
+    console.log("Wallet class", Wallet.makePublicWallet(wallet))
     return Wallet.makePublicWallet(wallet);
 
   }
@@ -62,4 +61,4 @@ class Wallet {
 
 }
 
-module.exports = User;
+module.exports = Wallet;
