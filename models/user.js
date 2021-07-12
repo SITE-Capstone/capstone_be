@@ -1,4 +1,7 @@
+const bcrypt = require("bcrypt");
+const { BCRYPT_WORK_FACTOR } = require("../config");
 const { BadRequestError } = require("../utils/errors")
+const db = require("../db");
 
 class User {
   // choose what to return to the user so password is 
@@ -12,9 +15,75 @@ class User {
   }
 
   // USER LOGIN
-  
+  static async login(credentials) {
+    // require the usernameOrEmail and password fields to be filled in request body.
+    const requiredFields = ["usernameOrEmail", "password"];
+    requiredFields.forEach((property) => {
+      if (!credentials.hasOwnProperty(property)) {
+        throw new BadRequestError(`Missing ${property} in request body.`);
+      }
+    });
+
+    const userEmail = await User.fetchUserByEmail(credentials.usernameOrEmail);
+    
+    const userUsername = await User.fetchUserByUsername(credentials.usernameOrEmail);
+
+    if (userEmail || userUsername) {
+      const isValid = await bcrypt.compare(credentials.password, user.password);
+      if (isValid) {
+        return User.makePublicUser(user);
+      }
+    }
+
+    throw new UnauthorizedError("Invalid email/password");
+  }
 
   // USER REGISTER
+  static async register(credentials) {
+    const requiredFields = ["email", "password", "firstName", "lastName", "username"];
+    requiredFields.forEach((property) => {
+      if (!credentials.hasOwnProperty(property)) {
+        throw new BadRequestError(`Missing ${property} in request body.`);
+      }
+    });
+
+    if (credentials.email.indexOf("@") <= 0) {
+      throw new BadRequestError("Invalid email.");
+    }
+
+    const existingUserEmail = await User.fetchUserByEmail(credentials.email);
+    if (existingUserEmail) {
+      throw new BadRequestError(`A user already exists with email: ${credentials.email}`);
+    }
+
+    const existingUsername = await User.fetchUserByUsername(credentials.username);
+    if (existingUsername) {
+      throw new BadRequestError(`A user already exists with username: ${credentials.username}`);
+    }
+
+    const hashedPassword = await bcrypt.hash(credentials.password, BCRYPT_WORK_FACTOR);
+    const normalizedEmail = credentials.email.toLowerCase();
+    const normalizedUsername = credentials.username.toLowerCase();
+
+    const userResult = await db.query(
+      ` INSERT INTO users (first_name, last_name, username, email, password)
+        VALUES ($1, $2, $3, $4, $5)
+        RETURNING id, first_name, last_name, username, email, created_at;
+      `,
+      [
+        credentials.firstName,
+        credentials.lastName,
+        normalizedUsername,
+        normalizedEmail,
+        hashedPassword,
+      ]
+    );
+
+    const user = userResult.rows[0];
+
+    return User.makePublicUser(user);
+
+  }
 
   // get a single user by their email
   static async fetchUserByEmail(email) {
