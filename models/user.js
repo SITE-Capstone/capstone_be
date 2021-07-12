@@ -1,16 +1,16 @@
 const bcrypt = require("bcrypt");
 const { BCRYPT_WORK_FACTOR } = require("../config");
-const { BadRequestError } = require("../utils/errors")
+const { BadRequestError } = require("../utils/errors");
 const db = require("../db");
 
 class User {
-  // choose what to return to the user so password is 
+  // choose what to return to the user so password is
   // not returned to body after signup or login
   static makePublicUser(user) {
     return {
       id: user.id,
       username: user.username,
-      createdAt = user.created_at,
+      createdAt: user.created_at,
     };
   }
 
@@ -25,13 +25,16 @@ class User {
     });
 
     const userEmail = await User.fetchUserByEmail(credentials.usernameOrEmail);
-    
+
     const userUsername = await User.fetchUserByUsername(credentials.usernameOrEmail);
 
     if (userEmail || userUsername) {
-      const isValid = await bcrypt.compare(credentials.password, user.password);
+      const isValid = await bcrypt.compare(
+        credentials.password,
+        userEmail ? userEmail.password : userUsername.password
+      );
       if (isValid) {
-        return User.makePublicUser(user);
+        return User.makePublicUser(userEmail || userUsername);
       }
     }
 
@@ -70,19 +73,12 @@ class User {
         VALUES ($1, $2, $3, $4, $5)
         RETURNING id, first_name, last_name, username, email, created_at;
       `,
-      [
-        credentials.firstName,
-        credentials.lastName,
-        normalizedUsername,
-        normalizedEmail,
-        hashedPassword,
-      ]
+      [credentials.firstName, credentials.lastName, normalizedUsername, normalizedEmail, hashedPassword]
     );
 
     const user = userResult.rows[0];
 
     return User.makePublicUser(user);
-
   }
 
   // get a single user by their email
@@ -91,7 +87,7 @@ class User {
       throw new BadRequestError("No email provided");
     }
 
-    const query = `SELECT * FROM users WHERE email = $1`
+    const query = `SELECT * FROM users WHERE email = $1`;
 
     const result = await db.query(query, [email.toLowerCase()]);
 
@@ -106,11 +102,11 @@ class User {
       throw new BadRequestError("No username provided");
     }
 
-    const query = `SELECT * FROM users WHERE username = $1`
+    const query = `SELECT * FROM users WHERE username = $1`;
 
-    const result = await db.query(query,[username.toLowerCase()]);
+    const result = await db.query(query, [username.toLowerCase()]);
 
-    const user = result.rows[0]
+    const user = result.rows[0];
 
     return user;
   }
