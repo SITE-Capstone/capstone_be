@@ -7,6 +7,7 @@ const router = express.Router();
 router.post("/login", async (req, res, next) => {
   try {
     const user = await User.login(req.body);
+    console.log(user)
     const token = createUserJwt(user);
     return res.status(200).json({ user, token });
   } catch (err) {
@@ -28,9 +29,10 @@ router.post("/register", async (req, res, next) => {
 // this runs requireAuthenticatedUser first to only allow
 // authenticated users to make requests to this endpoint
 router.get("/me", security.requireAuthenticatedUser, async (req, res, next) => {
+  console.log(res.locals.user)
   try {
-    const { email } = res.locals.user;
-    const user = await User.fetchUserByEmail(email);
+    const { username } = res.locals.user;
+    const user = await User.fetchUserByUsername(username);
     const publicUser = User.makePublicUser(user);
     return res.status(200).json({ user: publicUser });
   } catch (err) {
