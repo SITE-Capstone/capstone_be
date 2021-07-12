@@ -1,4 +1,4 @@
-const { BadRequestError } = require("../utils/errors")
+const { BadRequestError } = require("../utils/errors");
 const db = require("../db");
 
 class Wallet {
@@ -11,7 +11,7 @@ class Wallet {
       ada: wallet.ada,
       dot: wallet.dot,
       xmr: wallet.xmr,
-      doge: wallet.doge
+      doge: wallet.doge,
     };
   }
 
@@ -23,8 +23,8 @@ class Wallet {
         throw new BadRequestError(`Missing ${user_id} in request body.`);
     }
 
-
     const existingWallet = await Wallet.fetchWalletByUserId(user_id);
+
     if (existingWallet) {
       throw new BadRequestError(`A Wallet already exists with User_ID: ${user_id}`);
     }
@@ -40,7 +40,6 @@ class Wallet {
     const wallet = walletResult.rows[0];
     console.log("Wallet class", Wallet.makePublicWallet(wallet))
     return Wallet.makePublicWallet(wallet);
-
   }
 
   // fetches the wallet with the user_id
@@ -49,7 +48,7 @@ class Wallet {
       throw new BadRequestError("No user_id provided");
     }
 
-    const query = `SELECT * FROM wallet WHERE user_id = $1`
+    const query = `SELECT * FROM wallet WHERE user_id = $1`;
 
     const result = await db.query(query, [user_id]);
 
@@ -57,8 +56,8 @@ class Wallet {
 
     return user;
   }
-
-
 }
 
+
 module.exports = Wallet;
+
