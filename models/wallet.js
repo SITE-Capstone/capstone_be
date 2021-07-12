@@ -1,0 +1,65 @@
+const { BadRequestError } = require("../utils/errors")
+const db = require("../db");
+
+class Wallet {
+  static makePublicWallet(wallet) {
+    return {
+      user_id: wallet.user_id,
+      usd: wallet.usd,
+      btc: wallet.btc,
+      eth: wallet.eth,
+      ada: wallet.ada,
+      dot: wallet.dot,
+      xmr: wallet.xmr,
+      doge: wallet.doge
+    };
+  }
+
+  // Creates a wallet
+  static async generateWallet(credentials) {
+    const requiredFields = ["user_id"];
+    requiredFields.forEach((property) => {
+      if (!credentials.hasOwnProperty(property)) {
+        throw new BadRequestError(`Missing ${property} in request body.`);
+      }
+    });
+
+
+    const existingWallet = await User.fetchWalletByUserId(credentials.user_id);
+    if (existingWallet) {
+      throw new BadRequestError(`A Wallet already exists with User_ID: ${credentials.user_id}`);
+    }
+
+    const walletResult = await db.query(
+      ` INSERT INTO wallet (user_id)
+        VALUES ($1)
+        RETURNING user_id, usd, btc, eth, ada, dot, xmr, doge;
+      `,
+      [credentials.user_id]
+    );
+
+    const wallet = walletResult.rows[0];
+
+    return Wallet.makePublicWallet(wallet);
+
+  }
+
+  // fetches the wallet with the user_id
+  static async fetchWalletByUserId(user_id) {
+    if (!user_id) {
+      throw new BadRequestError("No user_id provided");
+    }
+
+    const query = `SELECT * FROM wallet WHERE user_id = $1`
+
+    const result = await db.query(query, [user_id]);
+
+    const user = result.rows[0];
+
+    return user;
+  }
+
+
+}
+
+module.exports = User;
