@@ -2,8 +2,8 @@ const bcrypt = require("bcrypt");
 const { BCRYPT_WORK_FACTOR } = require("../config");
 const { BadRequestError } = require("../utils/errors");
 const db = require("../db");
-const Wallet = require('./wallet')
-const Tutorial = require('./tutorial')
+const Wallet = require("./wallet");
+const Tutorial = require("./tutorial");
 
 class User {
   // choose what to return to the user so password is
@@ -19,10 +19,16 @@ class User {
   // USER LOGIN
   static async login(credentials) {
     // require the usernameOrEmail and password fields to be filled in request body.
+    let item;
     const requiredFields = ["usernameOrEmail", "password"];
     requiredFields.forEach((property) => {
+      if (property == "usernameOrEmail") {
+        item = "username or email";
+      } else {
+        item = "password";
+      }
       if (!credentials.hasOwnProperty(property)) {
-        throw new BadRequestError(`Missing ${property} in request body.`);
+        throw new BadRequestError(`Missing ${item} in request body.`);
       }
     });
 
@@ -81,9 +87,8 @@ class User {
     const user = userResult.rows[0];
 
     //Creates User Wallet & Tutorials List once User has been created
-    Wallet.generateWallet(user.id)
-    Tutorial.generateCompletedTutorials(user.id)
-    
+    Wallet.generateWallet(user.id);
+    Tutorial.generateCompletedTutorials(user.id);
 
     return User.makePublicUser(user);
   }
