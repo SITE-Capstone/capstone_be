@@ -5,8 +5,7 @@ CREATE TABLE users (
   password      TEXT NOT NULL,
   first_name    TEXT NOT NULL,
   last_name     TEXT NOT NULL,
-  created_at    TIMESTAMP NOT NULL DEFAULT NOW(),
-  tutorials_completed   TEXT 
+  created_at    TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE wallet(
@@ -22,11 +21,21 @@ CREATE TABLE wallet(
   FOREIGN KEY (user_id) REFERENCES users(id) on DELETE CASCADE
 );
 
-CREATE TABLE completed_tutorials(
+
+CREATE TABLE tutorials(
   id        SERIAL PRIMARY KEY,
-  tut1      BOOLEAN DEFAULT false,
-  tut2      BOOLEAN DEFAULT false,
-  tut3      BOOLEAN DEFAULT false,
-  user_id   INTEGER NOT NULL,
+  name      TEXT NOT NULL,
+  description      TEXT
+);
+
+
+CREATE TABLE completed_tutorials(
+  id            SERIAL PRIMARY KEY,
+  user_id       INTEGER NOT NULL,
+  completed     BOOLEAN DEFAULT false,
+  tutorial_id INTEGER REFERENCES tutorials(id) on DELETE CASCADE, 
   FOREIGN KEY (user_id) REFERENCES users(id) on DELETE CASCADE
 );
+
+
+
