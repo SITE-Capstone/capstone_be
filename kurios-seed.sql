@@ -34,3 +34,12 @@ VALUES(2,10000,4);
 INSERT INTO wallet (user_id, btc, eth, dot)
 VALUES(3,100000, 1, 5);
 
+INSERT INTO completed_tutorials (user_id)
+VALUES(1);
+
+INSERT INTO completed_tutorials (user_id, tut1)
+VALUES(2,true);
+
+INSERT INTO completed_tutorials (user_id, tut1, tut2, tut3)
+VALUES(3,true, false, true);
+

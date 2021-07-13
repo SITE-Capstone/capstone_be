@@ -20,4 +20,13 @@ CREATE TABLE wallet(
   doge      INTEGER NOT NULL DEFAULT 0,
   user_id   INTEGER NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users(id) on DELETE CASCADE
-)
+);
+
+CREATE TABLE completed_tutorials(
+  id        SERIAL PRIMARY KEY,
+  tut1      BOOLEAN DEFAULT false,
+  tut2      BOOLEAN DEFAULT false,
+  tut3      BOOLEAN DEFAULT false,
+  user_id   INTEGER NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users(id) on DELETE CASCADE
+);

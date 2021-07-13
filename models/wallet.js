@@ -52,9 +52,9 @@ class Wallet {
 
     const result = await db.query(query, [user_id]);
 
-    const user = result.rows[0];
+    const wallet = result.rows[0];
 
-    return user;
+    return wallet;
   }
 }
 

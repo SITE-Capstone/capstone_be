@@ -3,6 +3,7 @@ const { BCRYPT_WORK_FACTOR } = require("../config");
 const { BadRequestError } = require("../utils/errors");
 const db = require("../db");
 const Wallet = require('./wallet')
+const Tutorial = require('./tutorial')
 
 class User {
   // choose what to return to the user so password is
@@ -79,8 +80,9 @@ class User {
 
     const user = userResult.rows[0];
 
-    let user_id=user.id
-    Wallet.generateWallet(user_id)
+    //Creates User Wallet & Tutorials List once User has been created
+    Wallet.generateWallet(user.id)
+    Tutorial.generateCompletedTutorials(user.id)
     
 
     return User.makePublicUser(user);
