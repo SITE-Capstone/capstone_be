@@ -4,9 +4,8 @@ const db = require("../db");
 class Tutorial {
   static makePublicCompletedTutorials(completed_tutorials) {
     return {
-      user_id: completed_tutorials.user_id,
-      tut1: completed_tutorials.tut1,
-
+    //   user_id: completed_tutorials.user_id,
+    completed_tutorials: completed_tutorials,
     };
   }
 
@@ -26,14 +25,14 @@ class Tutorial {
     }
 
     const completedTutorialsResult = await db.query(
-      ` INSERT INTO completed_tutorials (user_id)
-        VALUES ($1)
-        RETURNING user_id, tut1;
+      ` INSERT INTO completed_tutorials (user_id, tutorial_id)
+        VALUES ($1,1),($1,2),($1,3),($1,4),($1,5),($1,6),($1,7),($1,8),($1,9)
+        RETURNING completed_tutorials;
       `,
       [user_id]
     );
 
-    const completed_tutorials = completedTutorialsResult.rows[0];
+    const completed_tutorials = completedTutorialsResult.rows;
     console.log("Tutorial class", Tutorial.makePublicCompletedTutorials(completed_tutorials))
     return Tutorial.makePublicCompletedTutorials(completed_tutorials);
   }
