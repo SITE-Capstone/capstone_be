@@ -46,6 +46,39 @@ class Tutorial {
     console.log("Tutorial class->Fetched", Tutorial.makePublicCompletedTutorials(completed_tutorials))
     return completed_tutorials;
   }
+
+  static async editCompletedTutorials(user_id, tutorial_id, completed) {
+    const requiredFields = ["user_id", "tutorial_id", "completed"]
+
+      if (!user_id) {
+        throw new BadRequestError(`Missing ${user_id} in request body.`);
+    }
+      if (!tutorial_id) {
+        throw new BadRequestError(`Missing ${tutorial_id} in request body.`);
+    }
+
+
+    const editCompletedTutorials = await db.query(
+      ` 
+        UPDATE completed_tutorials
+        SET completed = $3
+        WHERE user_id = $1 AND tutorial_id = $2;
+      `,
+      [user_id, tutorial_id, completed]
+    );
+    const completedTutorialsResult = await db.query(
+      ` 
+        SELECT * FROM completed_tutorials
+        WHERE user_id = $1 AND tutorial_id = $2;
+      `,
+      [user_id, tutorial_id]
+    );
+
+    const completed_tutorials = completedTutorialsResult.rows;
+    console.log("Tutorial class->completed?", Tutorial.makePublicCompletedTutorials(completed_tutorials))
+    return Tutorial.makePublicCompletedTutorials(completed_tutorials);
+  }
+
 }
 
 module.exports = Tutorial;
