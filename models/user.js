@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt");
 const { BCRYPT_WORK_FACTOR } = require("../config");
-const { BadRequestError } = require("../utils/errors");
+const { BadRequestError, UnauthorizedError } = require("../utils/errors");
 const db = require("../db");
 const Wallet = require("./wallet");
 const Tutorial = require("./tutorial");

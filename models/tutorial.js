@@ -15,7 +15,6 @@ class Tutorial {
 
   // Creates & assigns a Completed tutorials list to a user_id 
   static async generateCompletedTutorials(user_id) {
-  const requiredFields = ["user_id"]  
   if (!user_id) {
       throw new BadRequestError(`Missing ${user_id} in request body.`);
   }
@@ -67,19 +66,20 @@ class Tutorial {
     }
 
     //First db.query edits the table
-    //Second db.query returns the table
     const editQuery =
     ` 
     UPDATE completed_tutorials
     SET completed = $3
     WHERE user_id = $1 AND tutorial_id = $2;
     `;
+    await db.query(editQuery, [user_id, tutorial_id, completed]);
+    
+    //Second db.query returns the table
     const resultQuery =
     ` 
     SELECT * FROM completed_tutorials
     WHERE user_id = $1 AND tutorial_id = $2;
     `;
-    const editCompletedTutorials = await db.query(editQuery, [user_id, tutorial_id, completed]);
     const completedTutorialsResult = await db.query(resultQuery, [user_id, tutorial_id]);
 
     const completed_tutorials = completedTutorialsResult.rows;
