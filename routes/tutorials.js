@@ -4,6 +4,19 @@ const security = require("../middleware/security");
 const Tutorial = require("../models/tutorial");
 const router = express.Router();
 
+// Gets the completed statuses of all the tutorials in completed_tutorials per user_id
+router.get("/cards", async (req, res, next) => {
+    try {
+
+      //Model Functions
+      const tutorialCards = await Tutorial.fetchTutorialCards();
+      const publicTutorials = await Tutorial.makePublicTutorialCards(tutorialCards)
+
+      return res.status(200).json({ Tutorials: publicTutorials });
+  } catch (err) {
+    next(err)
+    }
+});
 
 //Edits a completed tutorial to true || false based on user_id & tutorial_id
 router.put("/completed", security.requireAuthenticatedUser, async (req, res, next) => {

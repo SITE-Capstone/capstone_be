@@ -6,6 +6,9 @@ class Tutorial {
   static makePublicCompletedTutorials(completed_tutorials) {
     return completed_tutorials
   }
+  static makePublicTutorialCards(completed_tutorials) {
+    return completed_tutorials
+  }
   
   
 
@@ -83,6 +86,24 @@ class Tutorial {
     console.log("Tutorial class->editCompletedTutorials", Tutorial.makePublicCompletedTutorials(completed_tutorials))
     return completed_tutorials;
   }
+
+
+  // fetches all Tutorial Card data
+  static async fetchTutorialCards() {
+
+    const fetchQuery = `SELECT * FROM tutorials`;
+    const result = await db.query(fetchQuery);
+
+
+    const tutorials = result.rows;
+    // console.log("Tutorial class->Fetched Cards", Tutorial.makePublicCompletedTutorials(tutorials))
+    console.log("Tutorial class->Fetched Cards", tutorials)
+    return tutorials;
+  }
+
+
+
+
 
 }
 
