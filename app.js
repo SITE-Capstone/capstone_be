@@ -28,7 +28,7 @@ app.get("/test", function (req, res) {
 });
 
 app.use("/auth", authRoutes);
-// app.use("/tutorials", tutorialsRoutes);
+app.use("/tutorials", tutorialsRoutes);
 
 // Errors
 app.use(function (req, res, next) {
