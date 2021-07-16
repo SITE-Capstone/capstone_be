@@ -4,8 +4,8 @@
 
 INSERT INTO tutorials (name, description)
 VALUES('Beginner’s Guide', 'Learn the basics of cryptocurrencies'),
-      ('General','Background information on cryptocurrencies'),
-      ('ADA', 'Learn about trading and how to time investments'),
+      ('General Information','Background information on cryptocurrencies'),
+      ('Investing Guide', 'Learn about trading and how to time investments'),
       ('BTC', 'Learn about Bitcoin the worlds first cryptocurrency'),
       ('ETH', 'Learn about Ethereum and decentralization'),
       ('ADA','Learn about Cardano and the basics of staking'),
