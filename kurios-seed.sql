@@ -2,16 +2,23 @@
 -- Create mock users
 -- Create mock listings
 
-INSERT INTO tutorials (name, description)
-VALUES('Beginner’s Guide', 'Learn the basics of cryptocurrencies'),
-      ('General Information','Background information on cryptocurrencies'),
-      ('Investing Guide', 'Learn about trading and how to time investments'),
-      ('BTC', 'Learn about Bitcoin the worlds first cryptocurrency'),
-      ('ETH', 'Learn about Ethereum and decentralization'),
-      ('ADA','Learn about Cardano and the basics of staking'),
-      ('DOGE', 'Learn about Dogecoin and risk assessment'),
-      ('DOT', 'Learn about Polkadot and blockchain'),
-      ('XMR', 'Learn about Monero and anonymity');
+INSERT INTO tutorials (name, description, color)
+VALUES('Beginner’s Guide', 'Learn the basics of cryptocurrencies', 'linear-gradient(247.96deg, #203ED6 0%, #0F0B38 94.96%)
+'),
+      ('General Information','Background information on cryptocurrencies', 'linear-gradient(248.51deg, #F50062 9.52%, #0F0B38 107.13%)'),
+      ('Investing Guide', 'Learn about trading and how to time investments', 'linear-gradient(243.19deg, #A9AC11 -4.06%, #0F0B38 99.5%)'),
+      ('BTC', 'Learn about Bitcoin the worlds first cryptocurrency', 'linear-gradient(244.8deg, #604392 5.75%, #0F0B38 96.35%)
+'),
+      ('ETH', 'Learn about Ethereum and decentralization', 'linear-gradient(246.46deg, #6162D6 0%, #0F0B38 98.1%)
+'),
+      ('ADA','Learn about Cardano and the basics of staking', 'linear-gradient(249.8deg, #439284 0%, #0F0B38 94.03%)
+'),
+      ('DOGE', 'Learn about Dogecoin and risk assessment', 'linear-gradient(248.41deg, #EB8338 0%, #0F0B38 104.37%)
+'),
+      ('DOT', 'Learn about Polkadot and blockchain', 'linear-gradient(248.6deg, #92438A 0%, #0F0B38 94.85%)
+'),
+      ('XMR', 'Learn about Monero and anonymity', 'linear-gradient(248.93deg, #D66168 1.39%, #0F0B38 95.91%)
+');
 
 INSERT INTO users (username, first_name, last_name, email, password)
 VALUES (

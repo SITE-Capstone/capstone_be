@@ -23,9 +23,10 @@ CREATE TABLE wallet(
 
 
 CREATE TABLE tutorials(
-  id        SERIAL PRIMARY KEY,
-  name      TEXT NOT NULL,
-  description      TEXT
+  id               SERIAL PRIMARY KEY,
+  name             TEXT NOT NULL,
+  description      TEXT,
+  color            TEXT
 );
 
 
