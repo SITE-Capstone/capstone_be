@@ -5,6 +5,7 @@ const config = require("./config");
 const security = require("./middleware/security");
 const authRoutes = require("./routes/auth");
 const tutorialsRoutes = require("./routes/tutorials");
+const walletRoutes = require("./routes/wallet");
 const { NotFoundError } = require("./utils/errors");
 
 const app = express();
@@ -29,6 +30,7 @@ app.get("/test", function (req, res) {
 
 app.use("/auth", authRoutes);
 app.use("/tutorials", tutorialsRoutes);
+app.use("/wallet", walletRoutes);
 
 // Errors
 app.use(function (req, res, next) {
