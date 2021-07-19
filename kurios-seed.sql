@@ -40,6 +40,7 @@ VALUES (
   'serena@williams.io',
   '$2b$12$LA1KAGAZHzUKGkxraRoClOsZ46xnmT6YxWuyYEJg5k7Iu29.uzrLW'
 );
+
 INSERT INTO wallet (user_id)
 VALUES(1);
 
