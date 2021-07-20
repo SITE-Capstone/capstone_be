@@ -16,4 +16,31 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+router.put("/exchange", security.requireAuthenticatedUser, async (req, res, next) => {
+  try {
+      //Defining the parameters
+      //TYPE 0= buying
+      //TYPE 1= selling
+
+      const { buying_id, selling_id, quantity, type} = req.body
+      const { username } = res.locals.user;
+      const user = await User.fetchUserByUsername(username);
+      const { id } = user;
+      const order = {
+        user_id:id,
+        buying_id: buying_id,
+        selling_id: selling_id,
+        quantity: quantity, 
+        type:type
+      }
+      //Model Functions
+      const transaction = await Wallet.editWallet(order);
+      const publicTransaction = await Wallet.makePublicTransaction(transaction);
+      
+      return res.status(200).json({ transaction: publicTransaction });
+    } catch (err) {
+        next(err);
+    }
+});
+
 module.exports = router;
