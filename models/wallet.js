@@ -89,6 +89,26 @@ class Wallet {
     return Wallet.makePublicWallet(wallet);
   }
 
+  static async fetchCurrencyByUserId(user_id, currency_id) {
+    if (!user_id) {
+      throw new BadRequestError("No user_id provided");
+    }
+    if (!currency_id) {
+      throw new BadRequestError("No currency_id provided");
+    }
+
+    const query = `SELECT (${currency_id}) FROM wallet WHERE user_id = $1`;
+
+    const result = await db.query(query, [user_id]);
+
+    const wallet = result.rows[0];
+
+    return wallet;
+  }
+
+
+
+
   static async makePublicTransaction(transaction){
     return {
       transactions:transaction,
@@ -105,34 +125,44 @@ class Wallet {
         throw new BadRequestError(`Missing ${property} in request body.`);
       }
     })
-    let user_id= order.user_id
-    let  buying_id= order.buying_id
-    let  selling_id= order.selling_id
     let quantity = order.quantity
-    let type= order.type
     
     let buying_quantity=quantity
     let selling_quantity=quantity
+    const currency1 = await this.fetchCurrencyByUserId(order.user_id, order.buying_id)
+    const currency2 = await this.fetchCurrencyByUserId(order.user_id, order.selling_id)
+
+    console.log("140",order.selling_id, currency2[order.selling_id],"->", order.buying_id, currency1[order.buying_id])
+    
+    
+    if(currency2<selling_quantity[order.selling_id]){
+      throw new BadRequestError(`Not enough ${order.selling_id} to purchase.`);
+    }
+
+    let newWalletAmount1=quantity+currency1[order.buying_id]
+    let newWalletAmount2=currency2[order.selling_id]-selling_quantity
+    console.log("#149 Wallet.js",order.buying_id,":", currency1[order.buying_id],"->", newWalletAmount1)
+    console.log("#150 Wallet.js",order.selling_id,":", currency2[order.selling_id],"->", newWalletAmount2)
     //First db.query edits the wallet Table
     const editQuery =
     ` 
     UPDATE wallet
-    SET ${buying_id} = $2, ${selling_id} =$3
+    SET ${order.buying_id} = $2, ${order.selling_id} =$3
     WHERE user_id = $1;
     `;
-    await db.query(editQuery, [user_id, buying_quantity, selling_quantity]);
+    await db.query(editQuery, [order.user_id, newWalletAmount1, newWalletAmount2]);
 
     const transactionResult = await db.query(
       ` INSERT INTO transactions (user_id, buying_id, buying_quantity, selling_id, selling_quantity  )
         VALUES ($1, $2, $3, $4, $5)
         RETURNING id, user_id, buying_id, buying_quantity, selling_id, selling_quantity;
       `,
-      [user_id, buying_id, buying_quantity, selling_id, selling_quantity]
+      [order.user_id, order.buying_id, buying_quantity, order.selling_id, selling_quantity]
     );
     
 
     const transaction = transactionResult.rows[0];
-    console.log("Wallet class->makeTransaction", Wallet.makePublicTransaction(transaction))
+    console.log("#166 Wallet class->makeTransaction", transaction)
     return transaction;
   }
 
