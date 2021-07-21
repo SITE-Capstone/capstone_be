@@ -38,5 +38,15 @@ CREATE TABLE completed_tutorials(
   FOREIGN KEY (user_id) REFERENCES users(id) on DELETE CASCADE
 );
 
+CREATE TABLE transactions(
+  id                SERIAL PRIMARY KEY,
+  user_id           INTEGER REFERENCES users(id) on DELETE CASCADE,
+  buying_id         TEXT NOT NULL,
+  buying_quantity   INTEGER NOT NULL,
+  selling_id        TEXT NOT NULL, 
+  selling_quantity  INTEGER NOT NULL, 
+  created_at        TIMESTAMP NOT NULL DEFAULT NOW()
+)
+
 
 

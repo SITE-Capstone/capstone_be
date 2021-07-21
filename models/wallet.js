@@ -55,19 +55,11 @@ class Wallet {
 
   // Creates a wallet
   static async generateWallet(user_id) {
-    const requiredFields = ["user_id"];
 
     if (!user_id) {
       throw new BadRequestError(`Missing ${user_id} in request body.`);
     }
 
-    /* COMMENTED OUT BELOW CODE: on creation of new user it had no user_id and broke on existing wallet check. Removed because it we do not need to check if a wallet exists since they are created on register and there is checking in place for register not to allow duplicate accounts.*/
-
-    // const existingWallet = await Wallet.fetchWalletByUserId(user_id);
-
-    // if (existingWallet) {
-    //   throw new BadRequestError(`A Wallet already exists with User_ID: ${user_id}`);
-    // }
 
     const walletResult = await db.query(
       ` INSERT INTO wallet (user_id)
@@ -96,6 +88,109 @@ class Wallet {
 
     return Wallet.makePublicWallet(wallet);
   }
+
+  static async fetchCurrencyByUserId(user_id, currency_id) {
+    if (!user_id) {
+      throw new BadRequestError("No user_id provided");
+    }
+    if (!currency_id) {
+      throw new BadRequestError("No currency_id provided");
+    }
+
+    const query = `SELECT (${currency_id}) FROM wallet WHERE user_id = $1`;
+
+    const result = await db.query(query, [user_id]);
+
+    const wallet = result.rows[0];
+
+    return wallet;
+  }
+
+
+
+
+  static async makePublicTransaction(transaction){
+    return {
+      transactions:transaction,
+    }
+  }
+  
+  
+  static async editWallet(order){
+    const requiredFields = ["user_id", "buying_id", "selling_id", "quantity", "type"]
+
+    requiredFields.forEach((property) => {
+      if (!order.hasOwnProperty(property)) {
+        console.log(property)
+        throw new BadRequestError(`Missing ${property} in request body.`);
+      }
+    })
+    let buying_quantity=order.quantity
+    let selling_quantity=order.quantity
+    if (order.type===0){
+      // let price = await fetch(`https://rest.coinapi.io/v1/exchangerate/${order.buying_id}/USD?apikey=BFBE77CB-2B01-43CC-B801-A9D7D2681D00`)
+      let price=.175
+      selling_quantity=Math.floor(buying_quantity*price)
+    }    
+    if (order.type===1){
+      // let price = await fetch(`https://rest.coinapi.io/v1/exchangerate/${order.selling_id}/USD?apikey=BFBE77CB-2B01-43CC-B801-A9D7D2681D00`)
+      let price = .175
+      buying_quantity=Math.floor(selling_quantity*price)
+    }    
+    const currency1 = await this.fetchCurrencyByUserId(order.user_id, order.buying_id)
+    const currency2 = await this.fetchCurrencyByUserId(order.user_id, order.selling_id)
+
+    console.log("140",order.selling_id, currency2[order.selling_id],"->", order.buying_id, currency1[order.buying_id])
+    
+    
+    if(currency2<selling_quantity[order.selling_id]){
+      throw new BadRequestError(`Not enough ${order.selling_id} to purchase.`);
+    }
+
+    let newWalletAmount1=buying_quantity+currency1[order.buying_id]
+    let newWalletAmount2=currency2[order.selling_id]-selling_quantity
+    console.log("#149 Wallet.js",order.buying_id,":", currency1[order.buying_id],"->", newWalletAmount1)
+    console.log("#150 Wallet.js",order.selling_id,":", currency2[order.selling_id],"->", newWalletAmount2)
+    //First db.query edits the wallet Table
+    const editQuery =
+    ` 
+    UPDATE wallet
+    SET ${order.buying_id} = $2, ${order.selling_id} =$3
+    WHERE user_id = $1;
+    `;
+    await db.query(editQuery, [order.user_id, newWalletAmount1, newWalletAmount2]);
+
+    const transactionResult = await db.query(
+      ` INSERT INTO transactions (user_id, buying_id, buying_quantity, selling_id, selling_quantity  )
+        VALUES ($1, $2, $3, $4, $5)
+        RETURNING id, user_id, buying_id, buying_quantity, selling_id, selling_quantity;
+      `,
+      [order.user_id, order.buying_id, buying_quantity, order.selling_id, selling_quantity]
+    );
+    
+
+    const transaction = transactionResult.rows[0];
+    console.log("#166 Wallet class->makeTransaction", transaction)
+    return transaction;
+  }
+
+
+  static async getTransactionHistory(user_id) {
+    if (!user_id) {
+      throw new BadRequestError(`Missing ${user_id} in request body.`);
+    }
+
+    const resultQuery =
+    ` 
+    SELECT * FROM transactions
+    WHERE user_id = $1;
+    `;
+    const transactionResult = await db.query(resultQuery, [user_id]);
+    return transactionResult;
+  }
+
+
+
 }
 
 module.exports = Wallet;
