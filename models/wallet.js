@@ -57,7 +57,7 @@ class Wallet {
   static async generateWallet(user_id) {
 
     if (!user_id) {
-      throw new BadRequestError(`Missing ${user_id} in request body.`);
+      throw new BadRequestError(`Missing user_id in request body.`);
     }
 
 
@@ -175,7 +175,7 @@ class Wallet {
 
   static async getTransactionHistory(user_id) {
     if (!user_id) {
-      throw new BadRequestError(`Missing ${user_id} in request body.`);
+      throw new BadRequestError(`Missing user_id in request body.`);
     }
 
     const resultQuery =
