@@ -19,8 +19,8 @@ router.get("/", async (req, res, next) => {
 router.put("/exchange", security.requireAuthenticatedUser, async (req, res, next) => {
   try {
       //Defining the parameters
-      //TYPE 0= buying
-      //TYPE 1= selling
+      //TYPE 0= buying Crypto <- Selling dollar
+      //TYPE 1= selling Crypto -> Buying dollar
 
       const { buying_id, selling_id, quantity, type} = req.body
       const { username } = res.locals.user;

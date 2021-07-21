@@ -125,10 +125,18 @@ class Wallet {
         throw new BadRequestError(`Missing ${property} in request body.`);
       }
     })
-    let quantity = order.quantity
-    
-    let buying_quantity=quantity
-    let selling_quantity=quantity
+    let buying_quantity=order.quantity
+    let selling_quantity=order.quantity
+    if (order.type===0){
+      // let price = await fetch(`https://rest.coinapi.io/v1/exchangerate/${order.buying_id}/USD?apikey=BFBE77CB-2B01-43CC-B801-A9D7D2681D00`)
+      let price=.175
+      selling_quantity=Math.floor(buying_quantity*price)
+    }    
+    if (order.type===1){
+      // let price = await fetch(`https://rest.coinapi.io/v1/exchangerate/${order.selling_id}/USD?apikey=BFBE77CB-2B01-43CC-B801-A9D7D2681D00`)
+      let price = .175
+      buying_quantity=Math.floor(selling_quantity*price)
+    }    
     const currency1 = await this.fetchCurrencyByUserId(order.user_id, order.buying_id)
     const currency2 = await this.fetchCurrencyByUserId(order.user_id, order.selling_id)
 
@@ -139,7 +147,7 @@ class Wallet {
       throw new BadRequestError(`Not enough ${order.selling_id} to purchase.`);
     }
 
-    let newWalletAmount1=quantity+currency1[order.buying_id]
+    let newWalletAmount1=buying_quantity+currency1[order.buying_id]
     let newWalletAmount2=currency2[order.selling_id]-selling_quantity
     console.log("#149 Wallet.js",order.buying_id,":", currency1[order.buying_id],"->", newWalletAmount1)
     console.log("#150 Wallet.js",order.selling_id,":", currency2[order.selling_id],"->", newWalletAmount2)
