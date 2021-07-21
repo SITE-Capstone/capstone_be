@@ -128,14 +128,11 @@ class Wallet {
     let buying_quantity=order.quantity
     let selling_quantity=order.quantity
     if (order.type===0){
-      // let price = await fetch(`https://rest.coinapi.io/v1/exchangerate/${order.buying_id}/USD?apikey=BFBE77CB-2B01-43CC-B801-A9D7D2681D00`)
-      let price=.175
-      selling_quantity=Math.floor(buying_quantity*price)
+      selling_quantity=Math.floor(order.quantity*order.price)
     }    
     if (order.type===1){
-      // let price = await fetch(`https://rest.coinapi.io/v1/exchangerate/${order.selling_id}/USD?apikey=BFBE77CB-2B01-43CC-B801-A9D7D2681D00`)
-      let price = .175
-      buying_quantity=Math.floor(selling_quantity*price)
+
+      buying_quantity=Math.floor(order.quantity*order.price)
     }    
     const currency1 = await this.fetchCurrencyByUserId(order.user_id, order.buying_id)
     const currency2 = await this.fetchCurrencyByUserId(order.user_id, order.selling_id)
@@ -143,7 +140,7 @@ class Wallet {
     console.log("140",order.selling_id, currency2[order.selling_id],"->", order.buying_id, currency1[order.buying_id])
     
     
-    if(currency2<selling_quantity[order.selling_id]){
+    if(currency2[order.selling_id]<selling_quantity){
       throw new BadRequestError(`Not enough ${order.selling_id} to purchase.`);
     }
 

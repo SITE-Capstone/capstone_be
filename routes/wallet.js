@@ -22,7 +22,7 @@ router.put("/exchange", security.requireAuthenticatedUser, async (req, res, next
       //TYPE 0= buying Crypto <- Selling dollar
       //TYPE 1= selling Crypto -> Buying dollar
 
-      const { buying_id, selling_id, quantity, type} = req.body
+      const { buying_id, selling_id, quantity, type, price} = req.body
       const { username } = res.locals.user;
       const user = await User.fetchUserByUsername(username);
       const { id } = user;
@@ -30,8 +30,9 @@ router.put("/exchange", security.requireAuthenticatedUser, async (req, res, next
         user_id:id,
         buying_id: buying_id,
         selling_id: selling_id,
-        quantity: quantity, 
-        type:type
+        quantity: quantity,
+        type:type,
+        price:price
       }
       //Model Functions
       const transaction = await Wallet.editWallet(order);
