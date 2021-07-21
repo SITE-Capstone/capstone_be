@@ -117,7 +117,7 @@ class Wallet {
   
   
   static async editWallet(order){
-    const requiredFields = ["user_id", "buying_id", "selling_id", "quantity", "type"]
+    const requiredFields = ["user_id", "buying_id", "selling_id", "quantity", "type", "price"]
 
     requiredFields.forEach((property) => {
       if (!order.hasOwnProperty(property)) {
@@ -125,6 +125,7 @@ class Wallet {
         throw new BadRequestError(`Missing ${property} in request body.`);
       }
     })
+    console.log(order)
     let buying_quantity=order.quantity
     let selling_quantity=order.quantity
     if (order.type===0){
