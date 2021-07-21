@@ -56,12 +56,14 @@ class Tutorial {
 
 
   static async editCompletedTutorials(user_id, tutorial_id, completed) {
-    const requiredFields = ["user_id", "tutorial_id", "completed"]
 
     if (!user_id) {
       throw new BadRequestError(`Missing ${user_id} in request body.`);
     }
     if (!tutorial_id) {
+      throw new BadRequestError(`Missing ${tutorial_id} in request body.`);
+    }
+    if (!(completed===1 || completed===0) ) {
       throw new BadRequestError(`Missing ${tutorial_id} in request body.`);
     }
 
