@@ -57,7 +57,7 @@ class Wallet {
   static async generateWallet(user_id) {
 
     if (!user_id) {
-      throw new BadRequestError(`Missing ${user_id} in request body.`);
+      throw new BadRequestError(`Missing user_id in request body.`);
     }
 
 
@@ -118,10 +118,8 @@ class Wallet {
   
   static async editWallet(order){
     const requiredFields = ["user_id", "buying_id", "selling_id", "quantity", "type", "price"]
-
     requiredFields.forEach((property) => {
       if (!order.hasOwnProperty(property)) {
-        console.log(property)
         throw new BadRequestError(`Missing ${property} in request body.`);
       }
     })
@@ -175,7 +173,7 @@ class Wallet {
 
   static async getTransactionHistory(user_id) {
     if (!user_id) {
-      throw new BadRequestError(`Missing ${user_id} in request body.`);
+      throw new BadRequestError(`Missing user_id in request body.`);
     }
 
     const resultQuery =

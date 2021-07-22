@@ -16,7 +16,7 @@ class Tutorial {
   // Creates & assigns a Completed tutorials list to a user_id 
   static async generateCompletedTutorials(user_id) {
   if (!user_id) {
-      throw new BadRequestError(`Missing ${user_id} in request body.`);
+      throw new BadRequestError(`Missing user_id in request body.`);
   }
 
   //Will default to false
@@ -56,13 +56,15 @@ class Tutorial {
 
 
   static async editCompletedTutorials(user_id, tutorial_id, completed) {
-    const requiredFields = ["user_id", "tutorial_id", "completed"]
 
     if (!user_id) {
-      throw new BadRequestError(`Missing ${user_id} in request body.`);
+      throw new BadRequestError(`Missing user_id in request body.`);
     }
     if (!tutorial_id) {
-      throw new BadRequestError(`Missing ${tutorial_id} in request body.`);
+      throw new BadRequestError(`Missing tutorial_id in request body.`);
+    }
+    if (!(completed===1 || completed===0) ) {
+      throw new BadRequestError(`Missing completed in request body.`);
     }
 
     //First db.query edits the table
