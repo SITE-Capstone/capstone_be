@@ -129,7 +129,7 @@ class Wallet {
     let buying_quantity=order.quantity
     let selling_quantity=order.quantity
     if (order.type===0){
-      selling_quantity=Math.floor(order.quantity*order.price)+1
+      selling_quantity=Math.ceil(order.quantity*order.price)
     }    
     if (order.type===1){
 
