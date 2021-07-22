@@ -127,7 +127,7 @@ class Wallet {
     let buying_quantity=order.quantity
     let selling_quantity=order.quantity
     if (order.type===0){
-      selling_quantity=Math.floor(order.quantity*order.price)
+      selling_quantity=Math.ceil(order.quantity*order.price)
     }    
     if (order.type===1){
 
@@ -139,6 +139,12 @@ class Wallet {
     console.log("140",order.selling_id, currency2[order.selling_id],"->", order.buying_id, currency1[order.buying_id])
     
     
+    if(order.quantity<=0){
+      throw new BadRequestError(`Please set the amount to be greater than 0`);
+    }
+    if(currency2[order.selling_id]<1){
+      throw new BadRequestError(`You have ran out of ${order.selling_id}.`);
+    }
     if(currency2[order.selling_id]<selling_quantity){
       throw new BadRequestError(`Not enough ${order.selling_id} to purchase.`);
     }
