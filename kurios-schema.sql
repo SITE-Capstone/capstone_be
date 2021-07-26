@@ -10,13 +10,13 @@ CREATE TABLE users (
 
 CREATE TABLE wallet(
   id        SERIAL PRIMARY KEY,
-  usd       INTEGER NOT NULL DEFAULT 10000,
-  btc       INTEGER NOT NULL DEFAULT 0,
-  eth       INTEGER NOT NULL DEFAULT 0,
-  ada       INTEGER NOT NULL DEFAULT 0,
-  dot       INTEGER NOT NULL DEFAULT 0,
-  xmr       INTEGER NOT NULL DEFAULT 0,
-  doge      INTEGER NOT NULL DEFAULT 0,
+  usd       NUMERIC(18,8) NOT NULL DEFAULT 10000,
+  btc       NUMERIC(18,8) NOT NULL DEFAULT 0,
+  eth       NUMERIC(18,8) NOT NULL DEFAULT 0,
+  ada       NUMERIC(18,8) NOT NULL DEFAULT 0,
+  dot       NUMERIC(18,8) NOT NULL DEFAULT 0,
+  xmr       NUMERIC(18,8) NOT NULL DEFAULT 0,
+  doge      NUMERIC(18,8) NOT NULL DEFAULT 0,
   user_id   INTEGER NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users(id) on DELETE CASCADE
 );
@@ -42,9 +42,9 @@ CREATE TABLE transactions(
   id                SERIAL PRIMARY KEY,
   user_id           INTEGER REFERENCES users(id) on DELETE CASCADE,
   buying_id         TEXT NOT NULL,
-  buying_quantity   INTEGER NOT NULL,
+  buying_quantity   NUMERIC(18,8) NOT NULL,
   selling_id        TEXT NOT NULL, 
-  selling_quantity  INTEGER NOT NULL, 
+  selling_quantity  NUMERIC(18,8) NOT NULL, 
   created_at        TIMESTAMP NOT NULL DEFAULT NOW()
 )
 

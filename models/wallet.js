@@ -5,48 +5,48 @@ class Wallet {
   static makePublicWallet(wallet) {
     return {
       user_id: wallet.user_id,
-      usd: wallet.usd,
+      usd: Number(wallet.usd),
       coins: [
         {
           id: 1,
           name: "Bitcoin",
           symbol: "BTC",
-          amount: wallet.btc,
+          amount: Number(wallet.btc),
           color: "linear-gradient(237.07deg, #484392 -8.06%, #0F0B38 96.63%)",
         },
         {
           id: 2,
           name: "Cardano",
           symbol: "ADA",
-          amount: wallet.ada,
+          amount: Number(wallet.ada),
           color: "linear-gradient(237.07deg, #439284 -8.06%, #0F0B38 96.63%)",
         },
         {
           id: 3,
           name: "Ethereum",
           symbol: "ETH",
-          amount: wallet.eth,
+          amount: Number(wallet.eth),
           color: "linear-gradient(216.27deg, #6162D6 -5.62%, #0F0B38 67.37%)",
         },
         {
           id: 4,
           name: "Dogecoin",
           symbol: "DOGE",
-          amount: wallet.doge,
+          amount: Number(wallet.doge),
           color: "linear-gradient(237.07deg, #EB8338 -8.06%, #0F0B38 96.63%)",
         },
         {
           id: 5,
           name: "Polkadot",
           symbol: "DOT",
-          amount: wallet.dot,
+          amount: Number(wallet.dot),
           color: "linear-gradient(237.07deg, rgba(146, 67, 138, 0.77) -8.06%, #0F0B38 96.63%)",
         },
         {
           id: 6,
           name: "Monero",
           symbol: "XMR",
-          amount: wallet.xmr,
+          amount: Number(wallet.xmr),
           color: "linear-gradient(237.07deg, #D66168 -8.06%, #0F0B38 96.63%)",
         },
       ],
@@ -123,20 +123,21 @@ class Wallet {
         throw new BadRequestError(`Missing ${property} in request body.`);
       }
     })
-    console.log(order)
+
+
+    
     let buying_quantity=order.quantity
     let selling_quantity=order.quantity
     if (order.type===0){
-      selling_quantity=Math.ceil(order.quantity*order.price)
+      selling_quantity=order.quantity*order.price
     }    
     if (order.type===1){
 
-      buying_quantity=Math.floor(order.quantity*order.price)
+      buying_quantity=order.quantity*order.price
     }    
     const currency1 = await this.fetchCurrencyByUserId(order.user_id, order.buying_id)
     const currency2 = await this.fetchCurrencyByUserId(order.user_id, order.selling_id)
 
-    console.log("140",order.selling_id, currency2[order.selling_id],"->", order.buying_id, currency1[order.buying_id])
     
     
     if(order.quantity<=0){
@@ -149,10 +150,15 @@ class Wallet {
       throw new BadRequestError(`Not enough ${order.selling_id} to purchase.`);
     }
 
-    let newWalletAmount1=buying_quantity+currency1[order.buying_id]
-    let newWalletAmount2=currency2[order.selling_id]-selling_quantity
-    console.log("#149 Wallet.js",order.buying_id,":", currency1[order.buying_id],"->", newWalletAmount1)
-    console.log("#150 Wallet.js",order.selling_id,":", currency2[order.selling_id],"->", newWalletAmount2)
+    let newWalletAmount1=Number(currency1[order.buying_id])+buying_quantity
+    let newWalletAmount2=Number(currency2[order.selling_id])-selling_quantity
+    console.log("XXXX",selling_quantity)
+    console.log("XXXX",buying_quantity)
+    console.log("XXXX",newWalletAmount1)
+    console.log("XXXX",newWalletAmount2)
+    console.log("XXXX",Number(currency1[order.buying_id]))
+    console.log("YYYY",currency2[order.selling_id])
+    
     //First db.query edits the wallet Table
     const editQuery =
     ` 
@@ -172,7 +178,7 @@ class Wallet {
     
 
     const transaction = transactionResult.rows[0];
-    console.log("#166 Wallet class->makeTransaction", transaction)
+    console.log("Wallet class->makeTransaction", transaction)
     return transaction;
   }
 
