@@ -7,6 +7,10 @@ const authRoutes = require("./routes/auth");
 const tutorialsRoutes = require("./routes/tutorials");
 const walletRoutes = require("./routes/wallet");
 const { NotFoundError } = require("./utils/errors");
+const scheduler = require("./cron/scheduler");
+
+scheduler.coinRequestCrons();
+// scheduler.hourlyCron();
 
 const app = express();
 
