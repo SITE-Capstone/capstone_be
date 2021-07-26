@@ -46,7 +46,35 @@ CREATE TABLE transactions(
   selling_id        TEXT NOT NULL, 
   selling_quantity  NUMERIC(18,8) NOT NULL, 
   created_at        TIMESTAMP NOT NULL DEFAULT NOW()
-)
+);
+
+CREATE TABLE prices_by_day(
+  id                SERIAL PRIMARY KEY,
+  coin_id           TEXT NOT NULL,
+  price             NUMERIC(18,8) NOT NULL,
+  time              TIMESTAMP NOT NULL
+);
+
+CREATE TABLE prices_by_hour(
+  id                SERIAL PRIMARY KEY,
+  coin_id           TEXT NOT NULL,
+  price             NUMERIC(18,8) NOT NULL,
+  time              TIMESTAMP NOT NULL
+);
+CREATE TABLE prices_by_minute(
+  id                SERIAL PRIMARY KEY,
+  coin_id           TEXT NOT NULL,
+  price             NUMERIC(18,8) NOT NULL,
+  time              TIMESTAMP NOT NULL
+);
+CREATE TABLE current_price(
+  id                SERIAL PRIMARY KEY,
+  coin_id           TEXT NOT NULL,
+  price             NUMERIC(18,8) NOT NULL,
+  time              TIMESTAMP NOT NULL
+);
+
+
 
 
 
