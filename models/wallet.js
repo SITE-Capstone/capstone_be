@@ -140,13 +140,13 @@ class Wallet {
 
     
     
-    if(order.quantity<=0){
+    if(order.quantity==0){
       throw new BadRequestError(`Please set the amount to be greater than 0`);
     }
-    if(currency2[order.selling_id]<1){
+    if(Number(currency2[order.selling_id])<=0){
       throw new BadRequestError(`You have ran out of ${order.selling_id}.`);
     }
-    if(currency2[order.selling_id]<selling_quantity){
+    if(Number(currency2[order.selling_id])<selling_quantity){
       throw new BadRequestError(`Not enough ${order.selling_id} to purchase.`);
     }
 
