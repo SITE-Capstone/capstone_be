@@ -123,7 +123,9 @@ class Wallet {
         throw new BadRequestError(`Missing ${property} in request body.`);
       }
     })
-    console.log(order)
+
+
+    
     let buying_quantity=order.quantity
     let selling_quantity=order.quantity
     if (order.type===0){
@@ -136,7 +138,6 @@ class Wallet {
     const currency1 = await this.fetchCurrencyByUserId(order.user_id, order.buying_id)
     const currency2 = await this.fetchCurrencyByUserId(order.user_id, order.selling_id)
 
-    console.log("140",order.selling_id, currency2[order.selling_id],"->", order.buying_id, currency1[order.buying_id])
     
     
     if(order.quantity<=0){
@@ -151,8 +152,7 @@ class Wallet {
 
     let newWalletAmount1=buying_quantity+currency1[order.buying_id]
     let newWalletAmount2=currency2[order.selling_id]-selling_quantity
-    console.log("#149 Wallet.js",order.buying_id,":", currency1[order.buying_id],"->", newWalletAmount1)
-    console.log("#150 Wallet.js",order.selling_id,":", currency2[order.selling_id],"->", newWalletAmount2)
+
     //First db.query edits the wallet Table
     const editQuery =
     ` 
@@ -172,7 +172,7 @@ class Wallet {
     
 
     const transaction = transactionResult.rows[0];
-    console.log("#166 Wallet class->makeTransaction", transaction)
+    console.log("Wallet class->makeTransaction", transaction)
     return transaction;
   }
 
