@@ -129,11 +129,11 @@ class Wallet {
     let buying_quantity=order.quantity
     let selling_quantity=order.quantity
     if (order.type===0){
-      selling_quantity=Math.ceil(order.quantity*order.price)
+      selling_quantity=order.quantity*order.price
     }    
     if (order.type===1){
 
-      buying_quantity=Math.floor(order.quantity*order.price)
+      buying_quantity=order.quantity*order.price
     }    
     const currency1 = await this.fetchCurrencyByUserId(order.user_id, order.buying_id)
     const currency2 = await this.fetchCurrencyByUserId(order.user_id, order.selling_id)
@@ -150,9 +150,15 @@ class Wallet {
       throw new BadRequestError(`Not enough ${order.selling_id} to purchase.`);
     }
 
-    let newWalletAmount1=buying_quantity+currency1[order.buying_id]
-    let newWalletAmount2=currency2[order.selling_id]-selling_quantity
-
+    let newWalletAmount1=Number(currency1[order.buying_id])+buying_quantity
+    let newWalletAmount2=Number(currency2[order.selling_id])-selling_quantity
+    console.log("XXXX",selling_quantity)
+    console.log("XXXX",buying_quantity)
+    console.log("XXXX",newWalletAmount1)
+    console.log("XXXX",newWalletAmount2)
+    console.log("XXXX",Number(currency1[order.buying_id]))
+    console.log("YYYY",currency2[order.selling_id])
+    
     //First db.query edits the wallet Table
     const editQuery =
     ` 
