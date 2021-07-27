@@ -5,8 +5,65 @@ class Price {
   static makePublicPriceData(data) {
     return data;
   }
+  
+    static async fetchCoinData(coin_id, table) {
+      if (!coin_id) {
+        throw new BadRequestError("No coin_id provided");
+      }
+  
+      const query = `SELECT * FROM ${table} WHERE coin_id = $1`;
+  
+      const result = await db.query(query, [coin_id]);
+  
+      const coinData = result.rows;
+  
+      return Price.makePublicPriceData(coinData);
+    }
 
-  // Creates a wallet
+    static async fetchCurrentPrice(coin_id) {
+      if (!coin_id) {
+        throw new BadRequestError("No coin_id provided");
+      }
+  
+      const query = `SELECT * FROM current_price WHERE coin_id = $1`;
+  
+      const result = await db.query(query, [coin_id]);
+  
+      const coinData = result.rows[0];
+  
+      return coinData.price;
+    }
+
+    static async fetchAllCurrentPrices(){
+  
+      const query = `SELECT * FROM current_price`;
+  
+      const result = await db.query(query, [coin_id]);
+  
+      const coinData = result.rows;
+  
+      return coinData;
+    }
+    static async fetchYearlyCoinData(coin_id){
+      data = await this.fetchCoinData(coin_id, "prices_by_day")
+      return data
+    }
+    static async fetchWeeklyCoinData(coin_id){
+      data= await this.fetchCoinData(coin_id, "prices_by_hour")
+      return data
+    }
+    static async fetchHourlyCoinData(coin_id){
+      data=await this.fetchCoinData(coin_id, "prices_by_minute")
+      return data
+    }
+
+
+
+
+
+
+
+
   static async insertSingleData(coin_id, time, price, table) {
 
     if (!coin_id) {
@@ -60,21 +117,6 @@ class Price {
   
 
 
-  // fetches the wallet with the user_id
-  static async fetchCoinData(coin_id, table) {
-    if (!coin_id) {
-      throw new BadRequestError("No coin_id provided");
-    }
-
-    const query = `SELECT * FROM ${table} WHERE coin_id = $1`;
-
-    const result = await db.query(query, [coin_id]);
-
-    const coinData = result.rows;
-
-    return Price.makePublicPriceData(coinData);
-  }
-
 
   static async editSingleCoinData(data_id, coin_id, price, time, table){
   if (!data_id) {
@@ -99,8 +141,6 @@ class Price {
   await db.query(editQuery, [data_id, coin_id, price, time]);
   }
 
-
-  
   
   static async editCoinData(data,table, coin_id){
 
