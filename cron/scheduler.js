@@ -1,4 +1,5 @@
 const cron = require("node-cron");
+const Price = require("../models/price");
 const apiCall = require("./apiCalls");
 
 module.exports = {
@@ -6,6 +7,11 @@ module.exports = {
     cron.schedule("*/5 * * * * *", async () => {
       // every 5 seconds... change to 15 seconds after testing
       apiCall.getCoinCurrentPrice("BTC");
+      apiCall.getCoinCurrentPrice("ETH");
+      apiCall.getCoinCurrentPrice("ADA");
+      apiCall.getCoinCurrentPrice("DOGE");
+      apiCall.getCoinCurrentPrice("DOT");
+      apiCall.getCoinCurrentPrice("XMR");
     });
     cron.schedule("*/15 * * * *", async () => {
       // every 15th minute
@@ -20,9 +26,4 @@ module.exports = {
       apiCall.getCoinYearlyPriceHistory("BTC");
     });
   },
-  // hourlyCron: () => {
-  //   cron.schedule("*/5 * * * *", () => {
-  //     console.log("hourlyChart");
-  //   });
-  // },
 };
