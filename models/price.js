@@ -33,14 +33,15 @@ class Price {
     return data;
   }
 
-  static async insertData(data, table) {
+  static async insertData(data, table, coin_id) {
     //Tables:
     // 1: prices_by_day  
     // 2: prices_by_hour 
     // 3: prices_by_minute 
     // 4: current_price
     data.forEach((element) => {
-      this.insertSingleYearlyData(element.coin_id, element.time, element.price, table)
+      console.log("EEEEEEEEEEEE", element.time_close,element.rate_close)
+      this.insertSingleData(coin_id, element.time_close, element.rate_close, table)
     })
   }
 
