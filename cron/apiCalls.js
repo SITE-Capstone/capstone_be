@@ -20,7 +20,7 @@ const apiKeys = {
   KEY17: process.env.APIKEY17,
   KEY18: process.env.APIKEY18,
 };
-const currentPriceApiKeys = {
+const keyVault = {
   KEY19: process.env.APIKEY19,
   KEY20: process.env.APIKEY20,
   KEY21: process.env.APIKEY21,
@@ -50,6 +50,39 @@ const currentPriceApiKeys = {
   KEY45: process.env.APIKEY45,
   KEY46: process.env.APIKEY46,
   KEY47: process.env.APIKEY47,
+  KEY48: process.env.APIKEY48,
+  KEY49: process.env.APIKEY49,
+  KEY50: process.env.APIKEY50,
+  KEY51: process.env.APIKEY51,
+  KEY52: process.env.APIKEY52,
+  KEY53: process.env.APIKEY53,
+  KEY54: process.env.APIKEY54,
+  KEY55: process.env.APIKEY55,
+  KEY56: process.env.APIKEY56,
+  KEY57: process.env.APIKEY57,
+  KEY58: process.env.APIKEY58,
+  KEY59: process.env.APIKEY59,
+  KEY60: process.env.APIKEY60,
+  KEY61: process.env.APIKEY61,
+  KEY62: process.env.APIKEY62,
+  KEY63: process.env.APIKEY63,
+  KEY64: process.env.APIKEY64,
+  KEY65: process.env.APIKEY65,
+  KEY66: process.env.APIKEY66,
+  KEY67: process.env.APIKEY67,
+  KEY68: process.env.APIKEY68,
+  KEY69: process.env.APIKEY69,
+  KEY70: process.env.APIKEY70,
+  KEY71: process.env.APIKEY71,
+  KEY72: process.env.APIKEY72,
+  KEY73: process.env.APIKEY73,
+  KEY74: process.env.APIKEY74,
+  KEY75: process.env.APIKEY75,
+  KEY76: process.env.APIKEY76,
+  KEY77: process.env.APIKEY77,
+  KEY78: process.env.APIKEY78,
+  KEY79: process.env.APIKEY79,
+  KEY80: process.env.APIKEY80,
 };
 
 let currentIndex = 0;
@@ -59,8 +92,8 @@ let yearlyIndex = 0;
 
 let currentPriceKeys = [];
 
-for (let e in currentPriceApiKeys) {
-  currentPriceKeys.push(currentPriceApiKeys[e]);
+for (let e in keyVault) {
+  currentPriceKeys.push(keyVault[e]);
 }
 
 console.log("current", currentPriceKeys);
