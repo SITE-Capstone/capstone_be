@@ -12,7 +12,7 @@ const scheduler = require("./cron/scheduler");
 /* 
 uncomment line 15 to run CRON scheduler
 */
-// scheduler.coinRequestCrons();
+scheduler.coinRequestCrons();
 
 const app = express();
 
