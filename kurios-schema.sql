@@ -52,26 +52,26 @@ CREATE TABLE prices_by_day(
   id                SERIAL PRIMARY KEY,
   coin_id           TEXT NOT NULL,
   price             NUMERIC(18,8) NOT NULL,
-  time              TIMESTAMP NOT NULL
+  time              TEXT NOT NULL
 );
 
 CREATE TABLE prices_by_hour(
   id                SERIAL PRIMARY KEY,
   coin_id           TEXT NOT NULL,
   price             NUMERIC(18,8) NOT NULL,
-  time              TIMESTAMP NOT NULL
+  time              TEXT NOT NULL
 );
 CREATE TABLE prices_by_minute(
   id                SERIAL PRIMARY KEY,
   coin_id           TEXT NOT NULL,
   price             NUMERIC(18,8) NOT NULL,
-  time              TIMESTAMP NOT NULL
+  time              TEXT NOT NULL
 );
 CREATE TABLE current_price(
   id                SERIAL PRIMARY KEY,
   coin_id           TEXT NOT NULL,
   price             NUMERIC(18,8) NOT NULL,
-  time              TIMESTAMP NOT NULL
+  time              TEXT NOT NULL
 );
 
 
