@@ -6,7 +6,7 @@ const router = express.Router();
 router.get("/", async (req, res, next) => {
   try {
     // fetch wallet for user
-    const prices = await Price.fetchAllCurrentPrices;
+    const prices = await Price.fetchAllCurrentPrices();
     return res.status(200).json({ Prices: prices });
   } catch (err) {
     next(err);
