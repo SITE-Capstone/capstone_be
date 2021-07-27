@@ -14,6 +14,7 @@ let yearlyIndex = 0;
 
 const getCoinCurrentPrice = async (symbol) => {
   let keys = [KEY1, KEY2, KEY3, KEY4, KEY5, KEY6];
+
   console.log("from apiCall..");
   console.log("currentIndex: ", currentIndex);
   console.log("key used before: ", keys[currentIndex]);
@@ -27,7 +28,7 @@ const getCoinCurrentPrice = async (symbol) => {
 };
 
 const getCoinDailyPriceHistory = async (symbol) => {
-  const keys = [KEY1, KEY2, KEY3, KEY4, KEY5, KEY6]; // change keys to new set (12 needed for 6 coins at every 15 min)
+  const keys = [KEY1, KEY2, KEY3, KEY4, KEY5, KEY6]; // change keys to new set (6 needed for 6 coins at every 15 min)
 
   const date = new Date();
   date.setDate(date.getDate() - 1);
@@ -54,16 +55,64 @@ const getCoinDailyPriceHistory = async (symbol) => {
       "&period_id=" +
       period_id +
       "&limit=" +
-      48 +
+      96 +
       "&apikey=" +
       keys[dailyIndex]
   );
-  console.log(req);
+
+  console.log("key used: ", keys[dailyIndex]);
+  dailyIndex++;
+  dailyIndex = dailyIndex % keys.length;
+
+  console.log("BTC Daily: ", req);
+  return req.data;
+};
+
+const getCoinWeeklyPriceHistory = async (symbol) => {
+  const keys = [KEY1, KEY2, KEY3, KEY4, KEY5, KEY6]; // change keys to new set (6 needed for 6 coins at every 15 min)
+
+  const date = new Date();
+  date.setDate(date.getDate() - 7);
+
+  let monthConnector = "-";
+  let dayConnector = "-";
+  if (date.getMonth() < 10) {
+    monthConnector = "-0";
+  }
+  if (date.getDate() < 10) {
+    dayConnector = "-0";
+  }
+  let year = date.getFullYear();
+  let month = date.getMonth() + 1;
+  let day = date.getDate();
+  let time_start = "" + year + monthConnector + month + dayConnector + day;
+
+  let period_id = "4HRS";
+  let req = await axios.get(
+    "https://rest.coinapi.io/v1/exchangerate/" +
+      symbol +
+      "/USD/history?&time_start=" +
+      time_start +
+      "&period_id=" +
+      period_id +
+      "&limit=" +
+      42 +
+      "&apikey=" +
+      keys[weeklyIndex]
+  );
+
+  console.log("key used: ", keys[weeklyIndex]);
+  weeklyIndex++;
+  weeklyIndex = weeklyIndex % keys.length;
+
+  console.log("BTC Weekly: ", req.data);
+  return req.data;
 };
 
 module.exports = {
   getCoinCurrentPrice,
   getCoinDailyPriceHistory,
+  getCoinWeeklyPriceHistory,
 };
 
 // DELETE * FROM historical

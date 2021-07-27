@@ -9,8 +9,10 @@ const walletRoutes = require("./routes/wallet");
 const { NotFoundError } = require("./utils/errors");
 const scheduler = require("./cron/scheduler");
 
-scheduler.coinRequestCrons();
-// scheduler.hourlyCron();
+/* 
+uncomment line 15 to run CRON scheduler
+*/
+// scheduler.coinRequestCrons();
 
 const app = express();
 

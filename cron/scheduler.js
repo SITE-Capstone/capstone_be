@@ -11,6 +11,10 @@ module.exports = {
       // every 15th minute
       apiCall.getCoinDailyPriceHistory("BTC");
     });
+    cron.schedule("0 */4 * * *", async () => {
+      // every 4 hours
+      apiCall.getCoinWeeklyPriceHistory("BTC");
+    });
   },
   // hourlyCron: () => {
   //   cron.schedule("*/5 * * * *", () => {
