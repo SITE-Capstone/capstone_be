@@ -31,6 +31,23 @@ const KEY27 = process.env.APIKEY27;
 const KEY28 = process.env.APIKEY28;
 const KEY29 = process.env.APIKEY29;
 const KEY30 = process.env.APIKEY30;
+const KEY31 = process.env.APIKEY31;
+const KEY32 = process.env.APIKEY32;
+const KEY33 = process.env.APIKEY33;
+const KEY34 = process.env.APIKEY34;
+const KEY35 = process.env.APIKEY35;
+const KEY36 = process.env.APIKEY36;
+const KEY37 = process.env.APIKEY37;
+const KEY38 = process.env.APIKEY38;
+const KEY39 = process.env.APIKEY39;
+const KEY40 = process.env.APIKEY40;
+const KEY41 = process.env.APIKEY41;
+const KEY42 = process.env.APIKEY42;
+const KEY43 = process.env.APIKEY43;
+const KEY44 = process.env.APIKEY44;
+const KEY45 = process.env.APIKEY45;
+const KEY46 = process.env.APIKEY46;
+const KEY47 = process.env.APIKEY47;
 
 let currentIndex = 0;
 let dailyIndex = 0;
@@ -38,16 +55,45 @@ let weeklyIndex = 0;
 let yearlyIndex = 0;
 
 const getCoinCurrentPrice = async (symbol) => {
-  let keys = [KEY19, KEY20, KEY21, KEY22, KEY23, KEY24, KEY25, KEY26, KEY27, KEY28, KEY29, KEY30];
+  let keys = [
+    KEY19,
+    KEY20,
+    KEY21,
+    KEY22,
+    KEY23,
+    KEY24,
+    KEY25,
+    KEY26,
+    KEY27,
+    KEY28,
+    KEY29,
+    KEY30,
+    KEY31,
+    KEY32,
+    KEY33,
+    KEY34,
+    KEY35,
+    KEY36,
+    KEY37,
+    KEY38,
+    KEY39,
+    KEY40,
+    KEY41,
+    KEY42,
+    KEY43,
+    KEY44,
+    KEY45,
+    KEY46,
+    KEY47,
+  ];
 
+  currentIndex++;
+  currentIndex = currentIndex % keys.length;
   console.log("currentIndex: ", currentIndex);
   console.log("key used: ", keys[currentIndex]);
   let req = await axios.get("https://rest.coinapi.io/v1/exchangerate/" + symbol + "/USD?apikey=" + keys[currentIndex]);
 
-  currentIndex++;
-  currentIndex = currentIndex % keys.length;
-
-  console.log("BTC Current Price: ", req.data.rate);
+  console.log(symbol + " Current Price: ", req.data.rate);
 };
 
 const getCoinDailyPriceHistory = async (symbol) => {
@@ -71,6 +117,8 @@ const getCoinDailyPriceHistory = async (symbol) => {
 
   let period_id = "15MIN";
 
+  dailyIndex++;
+  dailyIndex = dailyIndex % keys.length;
   console.log("key used: ", keys[dailyIndex]);
 
   let req = await axios.get(
@@ -86,10 +134,7 @@ const getCoinDailyPriceHistory = async (symbol) => {
       keys[dailyIndex]
   );
 
-  dailyIndex++;
-  dailyIndex = dailyIndex % keys.length;
-
-  console.log("BTC Daily: ", req);
+  console.log(symbol + " Daily: ", req.data);
   return req.data;
 };
 
@@ -114,6 +159,8 @@ const getCoinWeeklyPriceHistory = async (symbol) => {
 
   let period_id = "4HRS";
 
+  weeklyIndex++;
+  weeklyIndex = weeklyIndex % keys.length;
   console.log("key used: ", keys[weeklyIndex]);
 
   let req = await axios.get(
@@ -129,10 +176,7 @@ const getCoinWeeklyPriceHistory = async (symbol) => {
       keys[weeklyIndex]
   );
 
-  weeklyIndex++;
-  weeklyIndex = weeklyIndex % keys.length;
-
-  console.log("BTC Weekly: ", req.data);
+  console.log(symbol + " Weekly: ", req.data);
   return req.data;
 };
 
@@ -156,6 +200,8 @@ const getCoinYearlyPriceHistory = async (symbol) => {
   let time_start = "" + year + monthConnector + month + dayConnector + day;
   let period_id = "1DAY";
 
+  yearlyIndex++;
+  yearlyIndex = yearlyIndex % keys.length;
   console.log("key used: ", keys[yearlyIndex]);
 
   let req = await axios.get(
@@ -174,7 +220,7 @@ const getCoinYearlyPriceHistory = async (symbol) => {
   yearlyIndex++;
   yearlyIndex = yearlyIndex % keys.length;
 
-  console.log("BTC Yearly: ", req.data);
+  console.log(symbol + " Yearly: ", req.data);
   return req.data;
 };
 
