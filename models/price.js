@@ -34,15 +34,27 @@ class Price {
   }
 
   static async insertData(data, table, coin_id) {
+    if (!data) {
+      throw new BadRequestError(`Missing data in Insert Data.`);
+    }
+    if (!coin_id) {
+      throw new BadRequestError(`Missing coin_id in Insert data.`);
+    }
+    if (!table) {
+      throw new BadRequestError(`Missing table in Insert Data.`);
+    }
     //Tables:
     // 1: prices_by_day  
     // 2: prices_by_hour 
     // 3: prices_by_minute 
     // 4: current_price
-    data.forEach((element) => {
-      console.log("EEEEEEEEEEEE", element.time_close,element.rate_close)
-      this.insertSingleData(coin_id, element.time_close, element.rate_close, table)
-    })
+    if (table!="current_price"){
+      data.forEach((element) => {
+        this.insertSingleData(coin_id, element.time_close, element.rate_close, table)
+      })
+    }else{
+      this.insertSingleData(coin_id, data.time, data.rate, table)
+    }
   }
 
   
@@ -64,7 +76,7 @@ class Price {
   }
 
 
-static async editSingleCoinData(data_id, coin_id, price, time, table){
+  static async editSingleCoinData(data_id, coin_id, price, time, table){
   if (!data_id) {
     throw new BadRequestError(`Missing data_id in edit data.`);
   }
@@ -82,31 +94,35 @@ static async editSingleCoinData(data_id, coin_id, price, time, table){
   ` 
   UPDATE ${table}
   SET coin_id = $2, price = $3, time = $4
-  WHERE id = $1;s
+  WHERE id = $1;
   `;
   await db.query(editQuery, [data_id, coin_id, price, time]);
+  }
 
-
-}
 
   
   
-  static async editCoinData(data,table){
-    const requiredFields = ["coin_id", "time", "price"]
-    requiredFields.forEach((property) => {
-      if (!data.hasOwnProperty(property)) {
-        throw new BadRequestError(`Missing ${property} in data body.`);
-      }
-    })
+  static async editCoinData(data,table, coin_id){
 
-    const oldData = this.fetchCoinData(data.coin_id, table)
 
-    data.forEach((element, idx) => {
-      editSingleCoin(oldData[idx].id, element.coin_id, element.price, element.time, table)
-    })
+    const oldData = this.fetchCoinData(coin_id, table)
 
+    if (table!="current_price"){
+      data.forEach((element, idx) => {
+        editSingleCoin(oldData[idx].id, coin_id, element.price, element.time, table)
+      })
+    }else{
+      const editQuery =
+      ` 
+      UPDATE ${table}
+      SET price = $2, time = $3
+      WHERE coin_id= $1;
+      `;
+      await db.query(editQuery, [ coin_id, data.rate, data.time]);
+    }
     
-    const newData = this.fetchCoinData(data.coin_id, table)
+    
+    const newData = await this.fetchCoinData(coin_id, table)
     
 
     console.log("Coin class->edit Coin Data", newData)
