@@ -28,7 +28,7 @@ class User {
         item = "password";
       }
       if (!credentials.hasOwnProperty(property)) {
-        throw new BadRequestError(`Missing ${item} in request body.`);
+        throw new BadRequestError(`Missing ${item}  in request body.`);
       }
     });
 
