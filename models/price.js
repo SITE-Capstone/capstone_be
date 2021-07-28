@@ -131,6 +131,7 @@ class Price {
   if (!price) {
     throw new BadRequestError(`Missing price in edit data.`);
   }
+  console.log(data_id,coin_id, price, table)
   //First db.query edits the wallet Table
   const editQuery =
   ` 
@@ -144,12 +145,11 @@ class Price {
   
   static async editCoinData(data,table, coin_id){
 
-
-    const oldData = this.fetchCoinData(coin_id, table)
-
+    console.log(data)
+    const oldData = await this.fetchCoinData(coin_id, table)
     if (table!="current_price"){
-      data.forEach((element, idx) => {
-        editSingleCoin(oldData[idx].id, coin_id, element.price, element.time, table)
+      data.forEach(async (element, idx) => {
+        await this.editSingleCoinData(oldData[idx].id, coin_id, data[idx].rate_close, data[idx].time_close, table)
       })
     }else{
       const editQuery =
@@ -165,12 +165,11 @@ class Price {
     const newData = await this.fetchCoinData(coin_id, table)
     
 
-    console.log("Coin class->edit Coin Data", newData)
     return newData;
   }
 
 
-
+ 
 }
 
 module.exports = Price;

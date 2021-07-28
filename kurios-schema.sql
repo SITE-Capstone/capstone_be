@@ -69,7 +69,7 @@ CREATE TABLE prices_by_minute(
 );
 CREATE TABLE current_price(
   id                SERIAL PRIMARY KEY,
-  coin_id           UNIQUE TEXT NOT NULL,
+  coin_id           TEXT NOT NULL UNIQUE,
   price             NUMERIC(18,8) NOT NULL,
   time              TEXT NOT NULL
 );
