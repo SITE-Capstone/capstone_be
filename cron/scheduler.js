@@ -14,15 +14,21 @@ module.exports = {
     });
     cron.schedule("*/15 * * * *", async () => {
       // every 15th minute
-      apiCall.getCoinDailyPriceHistory("BTC");
+      for (let i = 0; i < symbols.length; i++) {
+        await apiCall.getCoinDailyPriceHistory(symbols[i]);
+      }
     });
     cron.schedule("0 */4 * * *", async () => {
       // every 4 hours
-      apiCall.getCoinWeeklyPriceHistory("BTC");
+      for (let i = 0; i < symbols.length; i++) {
+        await apiCall.getCoinWeeklyPriceHistory(symbols[i]);
+      }
     });
     cron.schedule("0 11 * * *", async () => {
       // once a day at 11 am
-      apiCall.getCoinYearlyPriceHistory("BTC");
+      for (let i = 0; i < symbols.length; i++) {
+        await apiCall.getCoinYearlyPriceHistory(symbols[i]);
+      }
     });
   },
 };
