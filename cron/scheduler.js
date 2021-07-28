@@ -2,16 +2,15 @@ const cron = require("node-cron");
 const Price = require("../models/price");
 const apiCall = require("./apiCalls");
 
+const symbols = ["BTC", "ETH", "ADA", "DOGE", "DOT", "XMR"];
+
 module.exports = {
   coinRequestCrons: () => {
     cron.schedule("*/5 * * * * *", async () => {
       // every 5 seconds... change to 15 seconds after testing
-      apiCall.getCoinCurrentPrice("BTC");
-      apiCall.getCoinCurrentPrice("ETH");
-      apiCall.getCoinCurrentPrice("ADA");
-      apiCall.getCoinCurrentPrice("DOGE");
-      apiCall.getCoinCurrentPrice("DOT");
-      apiCall.getCoinCurrentPrice("XMR");
+      for (let i = 0; i < symbols.length; i++) {
+        await apiCall.getCoinCurrentPrice(symbols[i]);
+      }
     });
     cron.schedule("*/15 * * * *", async () => {
       // every 15th minute
