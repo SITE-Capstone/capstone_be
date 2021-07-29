@@ -145,7 +145,6 @@ class Price {
   
   static async editCoinData(data,table, coin_id){
 
-    console.log(data)
     const oldData = await this.fetchCoinData(coin_id, table)
     if (table!="current_price"){
       data.forEach(async (element, idx) => {
