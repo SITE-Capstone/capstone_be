@@ -139,6 +139,7 @@ const getCoinCurrentPrice = async (symbol) => {
   );
 
   console.log(symbol + " Current Price: ", req.data.rate);
+  return req.data
 };
 
 const getCoinDailyPriceHistory = async (symbol) => {

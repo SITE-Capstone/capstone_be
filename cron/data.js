@@ -5,13 +5,9 @@ const apiCall = require("./apiCalls");
 const symbols = ["BTC", "ETH", "ADA", "DOGE", "DOT", "XMR"];
 
 async function updateYearly(symbol){
-    console.log("TEST",symbol)
     let data = await apiCall.getCoinYearlyPriceHistory(symbol);
     let smallSymbol = symbol.toLowerCase()
-    console.log(smallSymbol)
-    console.log("dad")
     await Price.editCoinData(data, "prices_by_day", smallSymbol)
-    console.log("edited")
     return "success"
 }
 
@@ -24,7 +20,8 @@ async function updateYearlyForAll(){
 
 async function updateWeekly(symbol){
     let data = await apiCall.getCoinWeeklyPriceHistory(symbol);
-    await Price.editCoinData(data, "prices_by_hour", symbol.toLowercase())
+    let smallSymbol = symbol.toLowerCase()
+    await Price.editCoinData(data, "prices_by_hour", smallSymbol)
 }
 
 async function updateWeeklyForAll(){
@@ -36,7 +33,8 @@ async function updateWeeklyForAll(){
 
 async function updateDaily(symbol){
     let data = await apiCall.getCoinDailyPriceHistory(symbol);
-    await Price.editCoinData(data, "prices_by_minute", symbol.toLowercase())
+    let smallSymbol = symbol.toLowerCase()
+    await Price.editCoinData(data, "prices_by_minute", smallSymbol)
 }
 
 async function updateDailyForAll(){
@@ -48,7 +46,8 @@ async function updateDailyForAll(){
 
 async function updateCurrentPrice(symbol){
     let data = await apiCall.getCoinCurrentPrice(symbol)
-    await Price.editCoinData(data, "prices_by_minute", symbol.toLowercase())
+    let smallSymbol = symbol.toLowerCase()
+    await Price.editCoinData(data, "current_price", smallSymbol)
 }
 
 async function updateCurrentPriceForAll(){

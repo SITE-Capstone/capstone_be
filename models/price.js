@@ -38,7 +38,7 @@ class Price {
   
       const query = `SELECT * FROM current_price`;
   
-      const result = await db.query(query, [coin_id]);
+      const result = await db.query(query);
   
       const coinData = result.rows;
   
@@ -86,7 +86,6 @@ class Price {
     );
 
     const data = dataResult.rows[0];
-    console.log("Price class $",coin_id, price, time);
     return data;
   }
 
