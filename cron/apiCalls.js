@@ -203,7 +203,7 @@ const getCoinWeeklyPriceHistory = async (symbol) => {
   let day = date.getDate();
   let time_start = "" + year + monthConnector + month + dayConnector + day;
 
-  let period_id = "4HRS";
+  let period_id = "1HRS";
 
   weeklyIndex++;
   weeklyIndex = weeklyIndex % keys.length;
@@ -217,7 +217,7 @@ const getCoinWeeklyPriceHistory = async (symbol) => {
       "&period_id=" +
       period_id +
       "&limit=" +
-      42 +
+      168 +
       "&apikey=" +
       keys[weeklyIndex]
   );
