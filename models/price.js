@@ -16,8 +16,9 @@ class Price {
       const result = await db.query(query, [coin_id]);
   
       const coinData = result.rows;
-  
-      return Price.makePublicPriceData(coinData);
+
+
+      return coinData;
     }
 
     static async fetchCurrentPrice(coin_id) {
@@ -45,15 +46,15 @@ class Price {
       return coinData;
     }
     static async fetchYearlyCoinData(coin_id){
-      data = await this.fetchCoinData(coin_id, "prices_by_day")
+      const data = await this.fetchCoinData(coin_id, "prices_by_day")
       return data
     }
     static async fetchWeeklyCoinData(coin_id){
-      data= await this.fetchCoinData(coin_id, "prices_by_hour")
+      const data= await this.fetchCoinData(coin_id, "prices_by_hour")
       return data
     }
     static async fetchHourlyCoinData(coin_id){
-      data=await this.fetchCoinData(coin_id, "prices_by_minute")
+      const data=await this.fetchCoinData(coin_id, "prices_by_minute")
       return data
     }
 
