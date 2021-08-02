@@ -18,30 +18,44 @@ router.get("/", async (req, res, next) => {
 
 router.put("/exchange", security.requireAuthenticatedUser, async (req, res, next) => {
   try {
-      //Defining the parameters
-      //TYPE 0= buying Crypto <- Selling dollar
-      //TYPE 1= selling Crypto -> Buying dollar
+    //Defining the parameters
+    //TYPE 0= buying Crypto <- Selling dollar
+    //TYPE 1= selling Crypto -> Buying dollar
 
-      const { buying_id, selling_id, quantity, type, price} = req.body
-      const { username } = res.locals.user;
-      const user = await User.fetchUserByUsername(username);
-      const { id } = user;
-      const order = {
-        user_id:id,
-        buying_id: buying_id,
-        selling_id: selling_id,
-        quantity: quantity,
-        type:type,
-        price:price
-      }
-      //Model Functions
-      const transaction = await Wallet.editWallet(order);
-      const publicTransaction = await Wallet.makePublicTransaction(transaction);
-      
-      return res.status(200).json({ transaction: publicTransaction });
-    } catch (err) {
-        next(err);
-    }
+    const { buying_id, selling_id, quantity, type, price } = req.body;
+    const { username } = res.locals.user;
+    const user = await User.fetchUserByUsername(username);
+    const { id } = user;
+    const order = {
+      user_id: id,
+      buying_id: buying_id,
+      selling_id: selling_id,
+      quantity: quantity,
+      type: type,
+      price: price,
+    };
+    //Model Functions
+    const transaction = await Wallet.editWallet(order);
+    const publicTransaction = await Wallet.makePublicTransaction(transaction);
+
+    return res.status(200).json({ transaction: publicTransaction });
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.get("/transactions", security.requireAuthenticatedUser, async (req, res, next) => {
+  try {
+    const { id } = res.locals.user;
+    const { buying_id } = req.query;
+    console.log(buying_id);
+    const transactions = await Wallet.getTransactionHistory(id, buying_id);
+    const publicTransaction = await Wallet.makePublicTransaction(transactions);
+
+    return res.status(200).json(publicTransaction);
+  } catch (err) {
+    next(err);
+  }
 });
 
 module.exports = router;

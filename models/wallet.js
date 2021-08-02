@@ -55,11 +55,9 @@ class Wallet {
 
   // Creates a wallet
   static async generateWallet(user_id) {
-
     if (!user_id) {
       throw new BadRequestError(`Missing user_id in request body.`);
     }
-
 
     const walletResult = await db.query(
       ` INSERT INTO wallet (user_id)
@@ -106,62 +104,52 @@ class Wallet {
     return wallet;
   }
 
-
-
-
-  static async makePublicTransaction(transaction){
+  static async makePublicTransaction(transaction) {
     return {
-      transactions:transaction,
-    }
+      transactions: transaction,
+    };
   }
-  
-  
-  static async editWallet(order){
-    const requiredFields = ["user_id", "buying_id", "selling_id", "quantity", "type", "price"]
+
+  static async editWallet(order) {
+    const requiredFields = ["user_id", "buying_id", "selling_id", "quantity", "type", "price"];
     requiredFields.forEach((property) => {
       if (!order.hasOwnProperty(property)) {
         throw new BadRequestError(`Missing ${property} in request body.`);
       }
-    })
+    });
 
+    let buying_quantity = order.quantity;
+    let selling_quantity = order.quantity;
+    if (order.type === 0) {
+      selling_quantity = order.quantity * order.price;
+    }
+    if (order.type === 1) {
+      buying_quantity = order.quantity * order.price;
+    }
+    const currency1 = await this.fetchCurrencyByUserId(order.user_id, order.buying_id);
+    const currency2 = await this.fetchCurrencyByUserId(order.user_id, order.selling_id);
 
-    
-    let buying_quantity=order.quantity
-    let selling_quantity=order.quantity
-    if (order.type===0){
-      selling_quantity=order.quantity*order.price
-    }    
-    if (order.type===1){
-
-      buying_quantity=order.quantity*order.price
-    }    
-    const currency1 = await this.fetchCurrencyByUserId(order.user_id, order.buying_id)
-    const currency2 = await this.fetchCurrencyByUserId(order.user_id, order.selling_id)
-
-    
-    
-    if(order.quantity==0){
+    if (order.quantity == 0) {
       throw new BadRequestError(`Please set the amount to be greater than 0`);
     }
-    if(Number(currency2[order.selling_id])<=0){
+    if (Number(currency2[order.selling_id]) <= 0) {
       throw new BadRequestError(`You have ran out of ${order.selling_id}.`);
     }
-    if(Number(currency2[order.selling_id])<selling_quantity){
+    if (Number(currency2[order.selling_id]) < selling_quantity) {
       throw new BadRequestError(`Not enough ${order.selling_id} to purchase.`);
     }
 
-    let newWalletAmount1=Number(currency1[order.buying_id])+buying_quantity
-    let newWalletAmount2=Number(currency2[order.selling_id])-selling_quantity
-    console.log("XXXX",selling_quantity)
-    console.log("XXXX",buying_quantity)
-    console.log("XXXX",newWalletAmount1)
-    console.log("XXXX",newWalletAmount2)
-    console.log("XXXX",Number(currency1[order.buying_id]))
-    console.log("YYYY",currency2[order.selling_id])
-    
+    let newWalletAmount1 = Number(currency1[order.buying_id]) + buying_quantity;
+    let newWalletAmount2 = Number(currency2[order.selling_id]) - selling_quantity;
+    console.log("XXXX", selling_quantity);
+    console.log("XXXX", buying_quantity);
+    console.log("XXXX", newWalletAmount1);
+    console.log("XXXX", newWalletAmount2);
+    console.log("XXXX", Number(currency1[order.buying_id]));
+    console.log("YYYY", currency2[order.selling_id]);
+
     //First db.query edits the wallet Table
-    const editQuery =
-    ` 
+    const editQuery = ` 
     UPDATE wallet
     SET ${order.buying_id} = $2, ${order.selling_id} =$3
     WHERE user_id = $1;
@@ -175,30 +163,30 @@ class Wallet {
       `,
       [order.user_id, order.buying_id, buying_quantity, order.selling_id, selling_quantity]
     );
-    
 
     const transaction = transactionResult.rows[0];
-    console.log("Wallet class->makeTransaction", transaction)
+    console.log("Wallet class->makeTransaction", transaction);
     return transaction;
   }
 
-
-  static async getTransactionHistory(user_id) {
+  static async getTransactionHistory(user_id, buying_id) {
     if (!user_id) {
       throw new BadRequestError(`Missing user_id in request body.`);
     }
+    if (!buying_id) {
+      throw new BadRequestError(`Missing buying_id in request body.`);
+    }
 
-    const resultQuery =
-    ` 
+    const resultQuery = ` 
     SELECT * FROM transactions
-    WHERE user_id = $1;
+    WHERE user_id = $1
+    AND buying_id = $2
+    ORDER BY created_at DESC
+    LIMIT 3;
     `;
-    const transactionResult = await db.query(resultQuery, [user_id]);
-    return transactionResult;
+    const transactionResult = await db.query(resultQuery, [user_id, buying_id]);
+    return transactionResult.rows;
   }
-
-
-
 }
 
 module.exports = Wallet;
