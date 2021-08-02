@@ -17,6 +17,7 @@ router.get("/yearly", async (req, res, next) => {
     try {
       const { coin_id } = req.query;
       const data = await Price.fetchYearlyCoinData(coin_id);
+      console.log("yyyyyyyyyy")
       return res.status(200).json({ data: data });
       } catch (err) {
           next(err);
