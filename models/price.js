@@ -16,9 +16,7 @@ class Price {
       const result = await db.query(query, [coin_id]);
   
       const coinData = result.rows;
-      console.log("SOUL")
-      console.log(result.rows)
-      console.log("FOOD")
+
 
       return coinData;
     }
