@@ -15066,7 +15066,7 @@ VALUES
             '2021-06-08T00:59:00.0000000Z',
             0
           );
-INSERT INTO prices_by_hour (coin_id, time, price)
+INSERT INTO prices_by_minute (coin_id, time, price)
 VALUES 
   (
   'btc',
