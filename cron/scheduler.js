@@ -15,7 +15,7 @@ module.exports = {
       // every 15th minute
       data.updateDailyForAll();
     });
-    cron.schedule("0 */4 * * *", async () => {
+    cron.schedule("48 17 * * *", async () => {
       // every 4 hours
       data.updateWeeklyForAll();
     });
