@@ -11,7 +11,7 @@ class Price {
         throw new BadRequestError("No coin_id provided");
       }
   
-      const query = `SELECT * FROM ${table} WHERE coin_id = $1 ORDER BY time`;
+      const query = `SELECT * FROM ${table} WHERE coin_id = $1 ORDER BY time DESC`;
   
       const result = await db.query(query, [coin_id]);
   
