@@ -146,7 +146,7 @@ const getCoinDailyPriceHistory = async (symbol) => {
   const keys = [apiKeys.KEY1, apiKeys.KEY2, apiKeys.KEY3, apiKeys.KEY4, apiKeys.KEY5, apiKeys.KEY6]; // change keys to new set (6 needed for 6 coins at every 15 min)
 
   const date = new Date();
-  date.setDate(date.getDate() - 1);
+  date.setTime(date.getTime() - (61 * 60 * 1000 + (date.getTime() % 60000)));
 
   let monthConnector = "-";
   let dayConnector = "-";
