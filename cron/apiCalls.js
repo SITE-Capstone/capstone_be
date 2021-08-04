@@ -188,7 +188,7 @@ const getCoinWeeklyPriceHistory = async (symbol) => {
   }
   let year = date.getFullYear();
   let month = date.getMonth() + 1;
-  let day = date.getDate();
+  let day = date.getDate()+1;
   let time_start = "" + year + monthConnector + month + dayConnector + day;
 
   let period_id = "1HRS";
@@ -230,7 +230,7 @@ const getCoinYearlyPriceHistory = async (symbol) => {
   }
   let year = date.getFullYear();
   let month = date.getMonth() + 1;
-  let day = date.getDate();
+  let day = date.getDate()+1;
   let time_start = "" + year + monthConnector + month + dayConnector + day;
   let period_id = "1DAY";
 
