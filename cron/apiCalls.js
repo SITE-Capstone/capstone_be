@@ -147,19 +147,7 @@ const getCoinDailyPriceHistory = async (symbol) => {
 
   const date = new Date();
   date.setTime(date.getTime() - (61 * 60 * 1000 + (date.getTime() % 60000)));
-
-  let monthConnector = "-";
-  let dayConnector = "-";
-  if (date.getMonth() < 10) {
-    monthConnector = "-0";
-  }
-  if (date.getDate() < 10) {
-    dayConnector = "-0";
-  }
-  let year = date.getFullYear();
-  let month = date.getMonth() + 1;
-  let day = date.getDate();
-  let time_start = "" + year + monthConnector + month + dayConnector + day;
+  let time_start = date.toISOString();
 
   let period_id = "1MIN";
 
