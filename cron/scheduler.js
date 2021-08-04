@@ -20,15 +20,9 @@ module.exports = {
       // every 4 hours
       data.updateWeeklyForAll();
     });
-    cron.schedule(
-      "18 16 * * *",
-      async () => {
-        // every 12 hours
-        data.updateYearlyForAll();
-      },
-      null,
-      true,
-      "America/New_York"
-    );
+    cron.schedule("0 */12 * * *", async () => {
+      // every 12 hours
+      data.updateYearlyForAll();
+    });
   },
 };
