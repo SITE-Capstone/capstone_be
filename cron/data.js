@@ -59,10 +59,10 @@ async function updateCurrentPriceForAll(){
 module.exports ={
     updateCurrentPrice,
     updateCurrentPriceForAll,
-    updateDaily,
-    updateDailyForAll,
-    updateWeekly,
-    updateWeeklyForAll,
-    updateYearly,
-    updateYearlyForAll
+    updatePricesByDay,
+    updatePricesByDayForAll,
+    updatePricesByHour,
+    updatePricesByHourForAll,
+    updatePricesByMinute,
+    updatePricesByMinuteForAll
 }
