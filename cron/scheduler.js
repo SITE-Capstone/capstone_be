@@ -20,9 +20,9 @@ module.exports = {
       // every 4 hours
       data.updatePricesByHourForAll();
     });
-    cron.schedule("10 17 * * *", async () => {
+    cron.schedule("0 */12 * * *", async () => {
       // every 12 hours
-      data.updatePricesByDayForAll()
+      data.updatePricesByDayForAll();
     });
   },
 };
