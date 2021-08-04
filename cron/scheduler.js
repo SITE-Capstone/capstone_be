@@ -13,15 +13,16 @@ module.exports = {
     });
     cron.schedule("*/15 * * * *", async () => {
       // every 15th minute
-      data.updateDailyForAll();
+
+      data.updatePricesByMinuteForAll();
     });
-    cron.schedule("48 17 * * *", async () => {
+    cron.schedule("50 17 * * *", async () => {
       // every 4 hours
-      data.updateWeeklyForAll();
+      data.updatePricesByHourForAll();
     });
     cron.schedule("10 17 * * *", async () => {
       // every 12 hours
-      data.updateYearlyForAll();
+      data.updatePricesByDayForAll();
     });
   },
 };
