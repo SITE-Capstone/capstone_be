@@ -21,7 +21,7 @@ module.exports = {
       data.updateWeeklyForAll();
     });
     cron.schedule(
-      "7 */12 * * *",
+      "18 16 * * *",
       async () => {
         // every 12 hours
         data.updateYearlyForAll();
