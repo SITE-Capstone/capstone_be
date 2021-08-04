@@ -161,7 +161,7 @@ const getCoinDailyPriceHistory = async (symbol) => {
   let day = date.getDate();
   let time_start = "" + year + monthConnector + month + dayConnector + day;
 
-  let period_id = "15MIN";
+  let period_id = "1MIN";
 
   dailyIndex++;
   dailyIndex = dailyIndex % keys.length;
@@ -175,7 +175,7 @@ const getCoinDailyPriceHistory = async (symbol) => {
       "&period_id=" +
       period_id +
       "&limit=" +
-      96 +
+      60 +
       "&apikey=" +
       keys[dailyIndex]
   );
