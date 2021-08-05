@@ -80,6 +80,7 @@ CREATE TABLE news_articles(
   headline          TEXT NOT NULL,
   time              TEXT NOT NULL,
   source            TEXT NOT NULL,
+  url               TEXT NOT NULL,
   image_url         TEXT NOT NULL
 )
 
