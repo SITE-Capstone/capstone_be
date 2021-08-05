@@ -1,7 +1,7 @@
 const { BadRequestError } = require("../utils/errors");
 const db = require("../db");
 
-class Price {
+class News {
   static makePublicPriceData(data) {
     return data;
   }
@@ -96,4 +96,4 @@ class Price {
  
 }
 
-module.exports = Price;
+module.exports = News;
