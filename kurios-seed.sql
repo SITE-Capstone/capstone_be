@@ -20,6 +20,38 @@ VALUES('Beginner’s Guide', 'Learn the basics of cryptocurrencies', 'linear-gra
       ('xmr', 'Learn about Monero and anonymity', 'linear-gradient(248.93deg, #D66168 1.39%, #0F0B38 95.91%)
 ');
 
+INSERT INTO news_articles(coin_id, time, headline, source, url,image_url)
+VALUES
+('btc', '2021-06-14T23:59:00.0000000Z', 'headline', 'News', 'https://news.google.com', 'https://picsum.photos/id/336/200'),
+('btc', '2021-06-14T23:59:00.0000000Z', 'headline', 'News', 'https://news.google.com', 'https://picsum.photos/id/336/200'),
+('btc', '2021-06-14T23:59:00.0000000Z', 'headline', 'News', 'https://news.google.com', 'https://picsum.photos/id/336/200'),
+('btc', '2021-06-14T23:59:00.0000000Z', 'headline', 'News', 'https://news.google.com', 'https://picsum.photos/id/336/200'),
+('btc', '2021-06-14T23:59:00.0000000Z', 'headline', 'News', 'https://news.google.com', 'https://picsum.photos/id/336/200'),
+('eth', '2021-06-14T23:59:00.0000000Z', 'headline', 'News', 'https://news.google.com', 'https://picsum.photos/id/336/200'),
+('eth', '2021-06-14T23:59:00.0000000Z', 'headline', 'News', 'https://news.google.com', 'https://picsum.photos/id/336/200'),
+('eth', '2021-06-14T23:59:00.0000000Z', 'headline', 'News', 'https://news.google.com', 'https://picsum.photos/id/336/200'),
+('eth', '2021-06-14T23:59:00.0000000Z', 'headline', 'News', 'https://news.google.com', 'https://picsum.photos/id/336/200'),
+('eth', '2021-06-14T23:59:00.0000000Z', 'headline', 'News', 'https://news.google.com', 'https://picsum.photos/id/336/200'),
+('xmr', '2021-06-14T23:59:00.0000000Z', 'headline', 'News', 'https://news.google.com', 'https://picsum.photos/id/336/200'),
+('xmr', '2021-06-14T23:59:00.0000000Z', 'headline', 'News', 'https://news.google.com', 'https://picsum.photos/id/336/200'),
+('xmr', '2021-06-14T23:59:00.0000000Z', 'headline', 'News', 'https://news.google.com', 'https://picsum.photos/id/336/200'),
+('xmr', '2021-06-14T23:59:00.0000000Z', 'headline', 'News', 'https://news.google.com', 'https://picsum.photos/id/336/200'),
+('xmr', '2021-06-14T23:59:00.0000000Z', 'headline', 'News', 'https://news.google.com', 'https://picsum.photos/id/336/200'),
+('dot', '2021-06-14T23:59:00.0000000Z', 'headline', 'News', 'https://news.google.com', 'https://picsum.photos/id/336/200'),
+('dot', '2021-06-14T23:59:00.0000000Z', 'headline', 'News', 'https://news.google.com', 'https://picsum.photos/id/336/200'),
+('dot', '2021-06-14T23:59:00.0000000Z', 'headline', 'News', 'https://news.google.com', 'https://picsum.photos/id/336/200'),
+('dot', '2021-06-14T23:59:00.0000000Z', 'headline', 'News', 'https://news.google.com', 'https://picsum.photos/id/336/200'),
+('dot', '2021-06-14T23:59:00.0000000Z', 'headline', 'News', 'https://news.google.com', 'https://picsum.photos/id/336/200'),
+('doge', '2021-06-14T23:59:00.0000000Z', 'headline', 'News', 'https://news.google.com', 'https://picsum.photos/id/336/200'),
+('doge', '2021-06-14T23:59:00.0000000Z', 'headline', 'News', 'https://news.google.com', 'https://picsum.photos/id/336/200'),
+('doge', '2021-06-14T23:59:00.0000000Z', 'headline', 'News', 'https://news.google.com', 'https://picsum.photos/id/336/200'),
+('doge', '2021-06-14T23:59:00.0000000Z', 'headline', 'News', 'https://news.google.com', 'https://picsum.photos/id/336/200'),
+('doge', '2021-06-14T23:59:00.0000000Z', 'headline', 'News', 'https://news.google.com', 'https://picsum.photos/id/336/200'),
+('ada', '2021-06-14T23:59:00.0000000Z', 'headline', 'News', 'https://news.google.com', 'https://picsum.photos/id/336/200'),
+('ada', '2021-06-14T23:59:00.0000000Z', 'headline', 'News', 'https://news.google.com', 'https://picsum.photos/id/336/200'),
+('ada', '2021-06-14T23:59:00.0000000Z', 'headline', 'News', 'https://news.google.com', 'https://picsum.photos/id/336/200'),
+('ada', '2021-06-14T23:59:00.0000000Z', 'headline', 'News', 'https://news.google.com', 'https://picsum.photos/id/336/200'),
+('ada', '2021-06-14T23:59:00.0000000Z', 'headline', 'News', 'https://news.google.com', 'https://picsum.photos/id/336/200');
 
 
 INSERT INTO current_price (coin_id, time, price)
