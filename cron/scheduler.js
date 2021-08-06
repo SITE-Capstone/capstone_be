@@ -26,10 +26,6 @@ module.exports = {
       // every 12 hours
       data.updatePricesByDayForAll();
     });
-    cron.schedule("30 19 * * *", async () => {
-      // update once for demo
-      data.updatePricesByDayForAll();
 
-    });
   },
 };
