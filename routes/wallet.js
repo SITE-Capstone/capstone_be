@@ -58,4 +58,18 @@ router.get("/transactions", security.requireAuthenticatedUser, async (req, res, 
   }
 });
 
+router.get("/alltransactions", security.requireAuthenticatedUser, async (req, res, next) => {
+  try {
+    const { id } = res.locals.user;
+    const { buying_id } = req.query;
+    console.log(buying_id);
+    const transactions = await Wallet.getAllTransactions(id, buying_id);
+    const publicTransaction = await Wallet.makePublicTransaction(transactions);
+
+    return res.status(200).json(publicTransaction);
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = router;

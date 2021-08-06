@@ -187,6 +187,25 @@ class Wallet {
     const transactionResult = await db.query(resultQuery, [user_id, buying_id]);
     return transactionResult.rows;
   }
+
+  static async getAllTransactions(user_id, buying_id) {
+    if (!user_id) {
+      throw new BadRequestError(`Missing user_id in request body.`);
+    }
+    if (!buying_id) {
+      throw new BadRequestError(`Missing buying_id in request body.`);
+    }
+
+    const resultQuery = ` 
+    SELECT * FROM transactions
+    WHERE user_id = $1 
+    AND buying_id = $2 
+    OR selling_id = $2 
+    ORDER BY created_at;
+    `;
+    const transactionResult = await db.query(resultQuery, [user_id, buying_id]);
+    return transactionResult.rows;
+  }
 }
 
 module.exports = Wallet;
