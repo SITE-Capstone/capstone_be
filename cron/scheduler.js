@@ -7,7 +7,7 @@ const symbols = ["BTC", "ETH", "ADA", "DOGE", "DOT", "XMR"];
 
 module.exports = {
   coinRequestCrons: () => {
-    cron.schedule("* * * * *", async () => {
+    cron.schedule("*/15 * * * * *", async () => {
       // every minute seconds... change to 15 seconds after testing
       data.updateCurrentPriceForAll();
     });
