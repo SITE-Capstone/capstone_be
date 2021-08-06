@@ -1,5 +1,6 @@
 const cron = require("node-cron");
 const Price = require("../models/price");
+const News = require("../models/news")
 const apiCall = require("./apiCalls");
 const data = require("./data");
 
@@ -19,6 +20,7 @@ module.exports = {
     cron.schedule("0 */4 * * *", async () => {
       // every 4 hours
       data.updatePricesByHourForAll();
+      News.refreshAllNewsData()
     });
     cron.schedule("0 */12 * * *", async () => {
       // every 12 hours
