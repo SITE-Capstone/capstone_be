@@ -7,7 +7,7 @@ const authRoutes = require("./routes/auth");
 const tutorialsRoutes = require("./routes/tutorials");
 const walletRoutes = require("./routes/wallet");
 const priceRoutes = require("./routes/price");
-const newsRoutes - require("./routes/news")
+const newsRoutes = require("./routes/news")
 const { NotFoundError } = require("./utils/errors");
 const scheduler = require("./cron/scheduler");
 
