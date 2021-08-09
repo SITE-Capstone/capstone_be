@@ -6,14 +6,15 @@ const symbols = ["BTC", "ETH", "ADA", "DOGE", "DOT", "XMR"];
 
 async function updatePricesByDay(symbol){
     let data = await apiCall.getCoinYearlyPriceHistory(symbol);
+    console.log("XXXXX",data)
     let smallSymbol = symbol.toLowerCase()
     await Price.editCoinData(data, "prices_by_day", smallSymbol)
     return "success"
 }
 
 async function updatePricesByDayForAll(){
-    console.log("yearly Call")
     for (let i = 0; i < symbols.length; i++) {
+        console.log("yearly Call", symbols[i])
         await updatePricesByDay(symbols[i]);
       }
 }
