@@ -422,7 +422,7 @@ const getCoinDailyPriceHistory = async (symbol) => {
       keys[dailyIndex]
   );
 
-  console.log(symbol + " Daily: ", req.data);
+  console.log(symbol + " Daily: ");
   return req.data;
 };
 
@@ -464,7 +464,7 @@ const getCoinWeeklyPriceHistory = async (symbol) => {
       keys[weeklyIndex]
   );
 
-  console.log(symbol + " Weekly: ", req.data);
+  console.log(symbol + " Weekly: ");
   return req.data;
 };
 
@@ -508,7 +508,7 @@ const getCoinYearlyPriceHistory = async (symbol) => {
   yearlyIndex++;
   yearlyIndex = yearlyIndex % keys.length;
 
-  console.log(symbol + " Yearly: ", req.data);
+  console.log(symbol + " Yearly: ");
   return req.data;
 };
 
