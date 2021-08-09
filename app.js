@@ -7,7 +7,8 @@ const authRoutes = require("./routes/auth");
 const tutorialsRoutes = require("./routes/tutorials");
 const walletRoutes = require("./routes/wallet");
 const priceRoutes = require("./routes/price");
-const newsRoutes = require("./routes/news")
+const newsRoutes = require("./routes/news");
+const statisticsRoutes = require("./routes/statistics")
 const { NotFoundError } = require("./utils/errors");
 const scheduler = require("./cron/scheduler");
 
@@ -41,6 +42,7 @@ app.use("/tutorials", tutorialsRoutes);
 app.use("/wallet", walletRoutes);
 app.use("/price", priceRoutes);
 app.use("/news", newsRoutes);
+app.use("/statistics", statisticsRoutes);
 
 // Errors
 app.use(function (req, res, next) {

@@ -82,8 +82,13 @@ CREATE TABLE news_articles(
   source            TEXT NOT NULL,
   url               TEXT NOT NULL,
   image_url         TEXT NOT NULL
+);
+
+
+CREATE TABLE statistics(
+  id                SERIAL PRIMARY KEY,
+  coin_id           TEXT NOT NULL,
+  volume            TEXT NOT NULL,
+  market_cap        TEXT NOT NULL,
+  supply            TEXT NOT NULL
 )
-
-
-
-
