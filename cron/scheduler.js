@@ -32,7 +32,7 @@ module.exports = {
     //HARD SCHEDULE
 
     cron.schedule("*/10 * * * *", async () => {
-      data.updatePricesByDayForAll();
+      // data.updatePricesByDayForAll();
       // await data.updatePricesByHourForAll();
       // await data.updatePricesByMinuteForAll();
     });
