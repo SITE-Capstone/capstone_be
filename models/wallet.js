@@ -206,6 +206,57 @@ class Wallet {
     const transactionResult = await db.query(resultQuery, [user_id, buying_id]);
     return transactionResult.rows;
   }
+
+  static async resetWallet(user_id){
+    if (!user_id) {
+      throw new BadRequestError(`Missing user_id in request body.`);
+    }
+
+
+    //First db.query edits the wallet Table
+    const editQuery = ` 
+    UPDATE wallet
+    SET usd = 10000, btc = 0, eth = 0, ada = 0, xmr = 0, doge = 0, dot = 0 
+    WHERE user_id = $1;
+    `;
+    await db.query(editQuery, [user_id]);
+
+    const transaction = await db.query(
+      ` DELETE FROM transactions
+        WHERE user_id = $1;
+      `,
+      [user_id]
+    );
+    console.log('reset Wallet')
+    
+    const newWallet = await this.fetchWalletByUserId(user_id)
+    return newWallet;
+  }
+  static async resetCustomWallet(user_id, amount){
+    if (!user_id) {
+      throw new BadRequestError(`Missing user_id in request body.`);
+    }
+
+
+    //First db.query edits the wallet Table
+    const editQuery = ` 
+    UPDATE wallet
+    SET usd = $2, btc = 0, eth = 0, ada = 0, xmr = 0, doge = 0, dot = 0 
+    WHERE user_id = $1;
+    `;
+    await db.query(editQuery, [user_id, Number(amount)]);
+
+    const transaction = await db.query(
+      ` DELETE FROM transactions
+        WHERE user_id = $1;
+      `,
+      [user_id]
+    );
+    console.log('reset Wallet')
+    
+    const newWallet = await this.fetchWalletByUserId(user_id)
+    return newWallet;
+  }
 }
 
 module.exports = Wallet;
