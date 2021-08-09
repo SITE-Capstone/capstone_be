@@ -30,12 +30,12 @@ module.exports = {
     });
 
     //HARD SCHEDULE
-    cron.schedule("*/57 * * * *", async () => {
-      // every 12 hours
-      await data.updatePricesByDayForAll();
-      await data.updatePricesByHourForAll();
-      await data.updatePricesByMinuteForAll();
-    });
+    
+    // cron.schedule("*/57 * * * *", async () => {
+    //   await data.updatePricesByDayForAll();
+    //   await data.updatePricesByHourForAll();
+    //   await data.updatePricesByMinuteForAll();
+    // });
 
   },
 };
