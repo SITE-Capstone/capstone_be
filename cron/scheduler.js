@@ -29,5 +29,11 @@ module.exports = {
       data.updatePricesByDayForAll();
     });
 
+    //HARD SCHEDULE
+    cron.schedule("*/45 * 9 * *", async () => {
+      // every 12 hours
+      data.updatePricesByDayForAll();
+    });
+
   },
 };
