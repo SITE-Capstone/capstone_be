@@ -469,7 +469,7 @@ const getCoinWeeklyPriceHistory = async (symbol) => {
 };
 
 const getCoinYearlyPriceHistory = async (symbol) => {
-  const keys = [apiKeys.KEY13, apiKeys.KEY14, apiKeys.KEY15, apiKeys.KEY16, apiKeys.KEY17, apiKeys.KEY18]; // change keys to new set (6 needed for 6 coins at once a day)
+  const keys = [ apiKeys.KEY16, apiKeys.KEY17, apiKeys.KEY18, apiKeys.KEY13, apiKeys.KEY14, apiKeys.KEY15,]; // change keys to new set (6 needed for 6 coins at once a day)
 
   const date = new Date();
   date.setDate(date.getDate() - 365);
