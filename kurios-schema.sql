@@ -88,7 +88,7 @@ CREATE TABLE news_articles(
 CREATE TABLE statistics(
   id                SERIAL PRIMARY KEY,
   coin_id           TEXT NOT NULL,
-  volume            NUMERIC(18,8) NOT NULL,
-  market_cap        NUMERIC(18,8) NOT NULL,
-  supply            NUMERIC(18,8) NOT NULL
+  volume            TEXT NOT NULL,
+  market_cap        TEXT NOT NULL,
+  supply            TEXT NOT NULL
 )
