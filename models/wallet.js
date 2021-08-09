@@ -201,7 +201,7 @@ class Wallet {
     WHERE user_id = $1 
     AND buying_id = $2 
     OR selling_id = $2 
-    ORDER BY created_at;
+    ORDER BY created_at DESC;
     `;
     const transactionResult = await db.query(resultQuery, [user_id, buying_id]);
     return transactionResult.rows;
