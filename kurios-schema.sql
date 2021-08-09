@@ -82,12 +82,11 @@ CREATE TABLE news_articles(
   source            TEXT NOT NULL,
   url               TEXT NOT NULL,
   image_url         TEXT NOT NULL
-)
-
+);
 
 
 CREATE TABLE statistics(
-  id                SERIAL PRIMARY KEY
+  id                SERIAL PRIMARY KEY,
   coin_id           TEXT NOT NULL,
   volume            NUMERIC(18,8) NOT NULL,
   market_cap        NUMERIC(18,8) NOT NULL,

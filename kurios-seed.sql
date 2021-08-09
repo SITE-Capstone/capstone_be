@@ -53,6 +53,9 @@ VALUES
 ('ada', '2021-06-14T23:59:00.0000000Z', 'headline', 'News', 'https://news.google.com', 'https://picsum.photos/id/336/200'),
 ('ada', '2021-06-14T23:59:00.0000000Z', 'headline', 'News', 'https://news.google.com', 'https://picsum.photos/id/336/200');
 
+INSERT INTO statistics ( coin_id, volume, market_cap, supply)
+VALUES ('btc',0,0,0),('eth',0,0,0),('doge',0,0,0),('xmr',0,0,0),('dot',0,0,0),('ada',0,0,0);
+
 
 INSERT INTO current_price (coin_id, time, price)
 VALUES (
