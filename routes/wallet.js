@@ -72,4 +72,32 @@ router.get("/alltransactions", security.requireAuthenticatedUser, async (req, re
   }
 });
 
+router.put("/reset", security.requireAuthenticatedUser, async (req, res, next) => {
+  try {
+    const { username } = res.locals.user;
+    const user = await User.fetchUserByUsername(username);
+    const { id } = user;
+    //Model Functions
+    const wallet = await Wallet.resetWallet(id);
+
+    return res.status(200).json({ wallet: wallet });
+  } catch (err) {
+    next(err);
+  }
+});
+router.put("/custom", security.requireAuthenticatedUser, async (req, res, next) => {
+  try {
+    const { username } = res.locals.user;
+    const { amount } = req.body;
+    const user = await User.fetchUserByUsername(username);
+    const { id } = user;
+    //Model Functions
+    const wallet = await Wallet.resetCustomWallet(id, amount);
+
+    return res.status(200).json({ wallet: wallet });
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = router;
