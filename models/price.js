@@ -42,7 +42,6 @@ class Price {
       const result = await db.query(query);
   
       const coinData = result.rows;
-      console.log("XXXXXXXXX", coinData)
   
       return coinData;
     }
