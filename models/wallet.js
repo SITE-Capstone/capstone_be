@@ -198,9 +198,8 @@ class Wallet {
 
     const resultQuery = ` 
     SELECT * FROM transactions
-    WHERE user_id = $1 
-    AND buying_id = $2 
-    OR selling_id = $2 
+    WHERE (user_id = $1 AND buying_id = $2)
+    OR (user_id = $1 AND selling_id = $2 )
     ORDER BY created_at DESC;
     `;
     const transactionResult = await db.query(resultQuery, [user_id, buying_id]);
