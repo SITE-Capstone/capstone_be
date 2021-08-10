@@ -31,12 +31,30 @@ POST     | /auth/register | Registers a new User Account & logs in
 Wallet
 CRUD     |      URL  | DESCRIPTION
 ---------|-----------|-------------
-GET      | /wallet/       | Get User Wallet Data
+GET      | /wallet       | Get User Wallet Data
 PUT      | /wallet/exchange | Exchanges Currencies & Edits Wallet
 GET      | /wallet/transactions | Gets all Purchases by coin_id
 GET      | /wallet/alltransactions | Gets all Transactions by coin_id
 PUT      | /wallet/reset | Resets user wallet back to default
 PUT      | /wallet/custom | Reset user wallet with a custom starting value
+
+Statistics 
+CRUD     |      URL  | DESCRIPTION
+---------|-----------|-------------
+GET      | /statistics         | Fetches Every Coin Statistic
+GET      | /statistics/coin    | Fetches Coin Statistics By Coin
+
+Prices
+CRUD     |      URL  | DESCRIPTION
+---------|-----------|-------------
+GET      | /price/    |Fetches All Current Prices
+GET      | /price/current   | Fetches current price by coin_id
+GET      | /price/hourly    | Fetches Hourly price data in minutes by coin_id
+GET      | /price/weekly    | Fetches Weekly price data in Hours by coin_id
+GET      | /price/yearly    | Fetches Yearly price data in days by coin_id
+
+
+
 
 
 
