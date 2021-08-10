@@ -24,3 +24,5 @@ Deployment Website: **Add Link to Deployed Project**
 - Recharts    : https://recharts.org
 - MaterialUI  : https://material-ui.com 
 - News API    : https://newsapi.org/s/google-news-api
+- CoinGecko   : https://www.coingecko.com/en/api
+
