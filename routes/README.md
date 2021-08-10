@@ -11,9 +11,6 @@ Frontend Repository: https://github.com/SITE-Capstone/capstone_fe
 
 Deployment Website: **Add Link to Deployed Project**
 
-CRUD     |      URL  | DESCRIPTION
------    |-----     |-------------|
-
 General
 
 CRUD     |      URL  | DESCRIPTION
@@ -27,6 +24,10 @@ CRUD     |      URL  | DESCRIPTION
 GET      | /auth/me       | Get User Data
 POST     | /auth/login    | Logs User In & fetches Data & Token
 POST     | /auth/register | Registers a new User Account & logs in
+
+Tutorials
+CRUD     |      URL  | DESCRIPTION
+-----    |-----     |-------------|
 
 Wallet
 CRUD     |      URL  | DESCRIPTION
